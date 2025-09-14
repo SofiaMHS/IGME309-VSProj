@@ -5,13 +5,14 @@
 #endif
 
 
-
+//declare initiale variables
 int screenWidth;
 int screenHeight;
 
 
 void init(void) {
 
+    //set initial variables' values
     screenWidth = 400;
     screenHeight = 400;
 
@@ -29,7 +30,9 @@ void reshape(int width, int height) {
     // do an orthographic parallel projection, limited by screen/window size
      glMatrixMode(GL_PROJECTION);
      glLoadIdentity();
-     gluOrtho2D(0.0, 1.0, 0.0, 1.0);
+     //use the width and height of the screen to dynamically size objects
+     //to fit the new screen sizes
+     gluOrtho2D(0.0, width, 0.0, height);
 
     // tell OpenGL to use the whole window for drawing 
     glViewport(0, 0, (GLsizei)width, (GLsizei)height);
@@ -47,22 +50,14 @@ void display(void)
     // wipe the entire color buffer to the current clear color.
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // Default coordinate bounds
-    // x range: –1.0 (left) to +1.0 (right)
-    // y range: –1.0 (bottom) to +1.0 (top)
-    // z range: –1.0 (near) to +1.0 (far)
-
     glColor3f(1.0f, 0.0f, 0.0f); // red
     glBegin(GL_TRIANGLES);
-    //left vertex
-    glVertex2f(screenWidth / 2 -0.5f, screenHeight / 2 + 0.5f);
-
-    //right vertex
-    glVertex2f(screenWidth / 2 + 0.5f, screenHeight / 2 + 0.5f);
-
-    //middle vertex
-    glVertex2f(screenWidth/2, screenHeight / 2 -0.5f);
-
+    //left vertex - x slightly below the origin, y slightly above origin
+    glVertex2f(screenWidth / 2 - screenWidth/4, screenHeight / 2 + screenWidth / 4);
+    //right vertex - x slightly above the origin, y slightly above origin
+    glVertex2f(screenWidth / 2 + screenWidth / 4, screenHeight / 2 + screenWidth / 4);
+    //middle vertex - x at the origin, y slightly below origin
+    glVertex2f(screenWidth/2, screenHeight/2 - screenWidth / 4);
 
     glEnd();
 
@@ -75,9 +70,11 @@ void display(void)
 
 int main(int argc, char* argv[])
 {
+    //call the function to initialize screenWidth and screenHeight to
+    //the correct starting proportions
+    init();  
     //initialize GLUT, let it extract command-line GLUT options that you may provide
     //NOTE that the '&' before argc
-   // init(); 
     glutInit(&argc, argv);
 
     // specify as double bufferred can make the display faster
@@ -85,21 +82,19 @@ int main(int argc, char* argv[])
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 
     // set the initial window size 
-
-
     glutInitWindowSize((int)screenWidth, (int)screenHeight);
 
     //set the initial window size 
-    //glutInitWindowSize(400, 400);
 
     // create the window with a title
     glutCreateWindow("My First Triange");
 
-   
-    //glutReshapeFunc(reshape);
+    //register the function to handle different
+    //window sizes
+    glutReshapeFunc(reshape);
 
+    //call the display function to draw necessary shapes
     glutDisplayFunc(display);
-    // register function to handle window resizes
 
     //start the glut main loop
     glutMainLoop();
