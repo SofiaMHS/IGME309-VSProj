@@ -27,9 +27,9 @@ void reshape(int width, int height) {
 
 
     // do an orthographic parallel projection, limited by screen/window size
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluOrtho2D(0.0, 10.0, 0.0, 10.0);
+     glMatrixMode(GL_PROJECTION);
+     glLoadIdentity();
+     gluOrtho2D(0.0, 1.0, 0.0, 1.0);
 
     // tell OpenGL to use the whole window for drawing 
     glViewport(0, 0, (GLsizei)width, (GLsizei)height);
@@ -52,18 +52,16 @@ void display(void)
     // y range: –1.0 (bottom) to +1.0 (top)
     // z range: –1.0 (near) to +1.0 (far)
 
-    glColor3f(1.0f, 0.0f, 0.0f); // blue
+    glColor3f(1.0f, 0.0f, 0.0f); // red
     glBegin(GL_TRIANGLES);
     //left vertex
-    glVertex2f(-0.5f, 0.5f);
-
+    glVertex2f(screenWidth / 2 -0.5f, screenHeight / 2 + 0.5f);
 
     //right vertex
-    glVertex2f(0.5f, 0.5f);
+    glVertex2f(screenWidth / 2 + 0.5f, screenHeight / 2 + 0.5f);
 
     //middle vertex
-    glVertex2f(0.0f, -0.5f);
-
+    glVertex2f(screenWidth/2, screenHeight / 2 -0.5f);
 
 
     glEnd();
@@ -79,6 +77,7 @@ int main(int argc, char* argv[])
 {
     //initialize GLUT, let it extract command-line GLUT options that you may provide
     //NOTE that the '&' before argc
+   // init(); 
     glutInit(&argc, argv);
 
     // specify as double bufferred can make the display faster
@@ -96,11 +95,11 @@ int main(int argc, char* argv[])
     // create the window with a title
     glutCreateWindow("My First Triange");
 
-    // register function to handle window resizes
+   
     //glutReshapeFunc(reshape);
 
     glutDisplayFunc(display);
-
+    // register function to handle window resizes
 
     //start the glut main loop
     glutMainLoop();
