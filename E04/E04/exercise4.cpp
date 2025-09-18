@@ -136,7 +136,7 @@ void update()
 	/***********************************************************/
 	// Calculate velocity_y with gravitational acceleration.
 	// write the code below
-
+	velocity_y += -9.8f * deltaTime; 
 	// write the code above
 	/***********************************************************/
 
@@ -152,6 +152,9 @@ void update()
 		// Incorporate collision detection to ascertain when the ball makes contact with the bar.
 		// Upon collision, modify the ball's trajectory by adjusting its velocity, ensuring it bounces back.
 		// write the code below
+		if (barPos[1] >= ballPos[1] && barPos[0] - barSize /2  < ballPos[0] && barPos[0] + barSize /2 > ballPos[0]) {
+			velocity_y += 9.0f; 
+		}
 
 		// write the code above
 		/***********************************************************/
