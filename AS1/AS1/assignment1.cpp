@@ -4,6 +4,10 @@
 #include <GL/freeglut.h> //include glut for Windows
 #endif
 
+#include <cstdlib>
+#include <ctime>
+#include <cmath>
+
 
 //declare initiale variables
 int screenWidth;
@@ -20,12 +24,33 @@ void init(void) {
 
 void drawFilledCircle(float red, float green, float blue, float center_x, float center_y, float radius) {
 
+    glColor3f(red, green, blue);
+    glBegin(GL_TRIANGLES);
+
+    float tris = 10;
+
+    for (int i = 0; i <= tris; i++) {
+        
+        float angle = (float)i / tris * 2.0f * 3.14f;
+        glVertex2f(center_x + radius * cos(angle),center_y + radius * sin(angle));
+    }
+
 }
 
 
 void drawWireframeCircle(float red, float green, float blue, float center_x, float center_y, float radius, float lineWidth) {
 
+    glColor3f(red, green, blue);
+    glBegin(GL_LINES);
 
+    float tris = 10;
+
+    for (int i = 0; i <= tris; i++) {
+
+        float angle = (float)i / tris * 2.0f * 3.14f;
+        glVertex2f(center_x + radius * cos(angle), center_y + radius * sin(angle));
+        glLineWidth(lineWidth);
+    }
 
 }
 
