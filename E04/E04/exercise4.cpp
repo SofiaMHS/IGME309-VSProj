@@ -106,14 +106,16 @@ void keyboard(unsigned char key, int x, int y)
 	{
 	case 27:
 		/***********************************************************/
-		// Exit the game.
+		// Exit the game if the user presses esc
 		exit(0);
 		/***********************************************************/
 		break;
 	case 'a':
 		/***********************************************************/
 		// Move the bar one step left, make sure the bar does not move out of the screen.
+		//if the bar's x value minus the length is less than 0, it has reached the left of the screen
 		if (barPos[0] - barSize + 1 > 0) {
+			//if the bar is not at the left of the screen, bar moves an 8th of the canvasSize to the left 
 			barPos[0] -= canvasSize[0] / 8;
 		}
 		/***********************************************************/
@@ -121,7 +123,9 @@ void keyboard(unsigned char key, int x, int y)
 	case 'd':
 		/***********************************************************/
 		// Move the bar one step right, make sure the bar does not move out of the screen.
+		//if the bar's x value plus the length is less than 0, it has reached the right of the screen
 		if (barPos[0] + barSize - 1 < canvasSize[0]) {
+			//if the bar is not at the right of the screen, bar moves an 8th of the canvasSize to the right 
 			barPos[0] += canvasSize[0] / 8;
 		}
 		break;
@@ -135,9 +139,8 @@ void update()
 
 	/***********************************************************/
 	// Calculate velocity_y with gravitational acceleration.
-	// write the code below
+	//velocity w/ grav. accel. = (velocity + gravitational accel. * time) 
 	velocity_y += -9.8f * deltaTime; 
-	// write the code above
 	/***********************************************************/
 
 	if (ballIsActive == false)
@@ -151,12 +154,15 @@ void update()
 		/***********************************************************/
 		// Incorporate collision detection to ascertain when the ball makes contact with the bar.
 		// Upon collision, modify the ball's trajectory by adjusting its velocity, ensuring it bounces back.
-		// write the code below
-		if (barPos[1] >= ballPos[1] && barPos[0] - barSize /2  < ballPos[0] && barPos[0] + barSize /2 > ballPos[0]) {
-			velocity_y += 9.0f; 
-		}
 
-		// write the code above
+		//if the ball's y value is less than or euqal to the bar's y value + .5f, and the ball's y is higher than the bar's y value minus .5f
+		if (barPos[1] + 0.5f >= ballPos[1] && barPos[1] - 0.5f <= ballPos[1] 
+			//and the bar's x value from the left is las than the ball's x value, 
+			// and the bar's x value from the right is greater than the ball's y value
+			&& barPos[0] - barSize /2  < ballPos[0] && barPos[0] + barSize /2 > ballPos[0]) {
+			//on collision with the bar, the ball's velocity is reversed 
+			velocity_y = -velocity_y; 
+		}
 		/***********************************************************/
 
 		if (ballPos[0] - radius < 0.0f) // left boundary
