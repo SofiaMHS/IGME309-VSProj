@@ -25,7 +25,7 @@ void init(void) {
 void drawFilledCircle(float red, float green, float blue, float center_x, float center_y, float radius) {
 
     glColor3f(red, green, blue);
-    glBegin(GL_TRIANGLES);
+    glBegin(GL_POLYGON);
 
     float tris = 10;
 
@@ -84,6 +84,7 @@ void display(void)
     // wipe the entire color buffer to the current clear color.
     glClear(GL_COLOR_BUFFER_BIT);
 
+    /*
     glColor3f(1.0f, 0.0f, 0.0f); // red
     glBegin(GL_TRIANGLES);
     //left vertex - x slightly below the origin, y slightly above origin
@@ -92,6 +93,10 @@ void display(void)
     glVertex2f(screenWidth / 2 + screenWidth / 4, screenHeight / 2 + screenWidth / 4);
     //middle vertex - x at the origin, y slightly below origin
     glVertex2f(screenWidth / 2, screenHeight / 2 - screenWidth / 4);
+    */
+
+    //drawFilledCircle(0.0f,0.0f,1.0f, screenWidth / 2, screenHeight / 2 - screenWidth / 4, 200.0f);
+    drawWireframeCircle(0.0f, 0.0f, 1.0f, screenWidth / 2, screenHeight / 2 - screenWidth / 4, 100.0f, 50.0f);
 
     glEnd();
 
