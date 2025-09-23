@@ -41,6 +41,7 @@ void drawFilledCircle(float red, float green, float blue, float center_x, float 
 void drawWireframeCircle(float red, float green, float blue, float center_x, float center_y, float radius, float lineWidth) {
 
     glColor3f(red, green, blue);
+    glLineWidth(lineWidth);
     glBegin(GL_LINE_LOOP);
 
     float tris = 10;
@@ -49,7 +50,6 @@ void drawWireframeCircle(float red, float green, float blue, float center_x, flo
 
         float angle = (float)i / tris * 2.0f * 3.14f;
         glVertex2f(center_x + radius * cos(angle), center_y + radius * sin(angle));
-        glLineWidth(lineWidth);
     }
 
 }
@@ -96,7 +96,7 @@ void display(void)
     */
 
     //drawFilledCircle(0.0f,0.0f,1.0f, screenWidth / 2, screenHeight / 2 - screenWidth / 4, 200.0f);
-    drawWireframeCircle(0.0f, 0.0f, 1.0f, screenWidth / 2, screenHeight / 2 - screenWidth / 4, 100.0f, 50.0f);
+    drawWireframeCircle(0.0f, 0.0f, 1.0f, screenWidth / 2, screenHeight / 2 - screenWidth / 4, 100.0f, 5.0f);
 
     glEnd();
 
