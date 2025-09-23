@@ -41,7 +41,7 @@ void drawFilledCircle(float red, float green, float blue, float center_x, float 
 void drawWireframeCircle(float red, float green, float blue, float center_x, float center_y, float radius, float lineWidth) {
 
     glColor3f(red, green, blue);
-    glBegin(GL_LINES);
+    glBegin(GL_LINE_LOOP);
 
     float tris = 10;
 
