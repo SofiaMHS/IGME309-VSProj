@@ -1,0 +1,9 @@
+IGME 309  
+Sofia Murphy  
+Assignment 01  
+09/24/2025
+
+	For this assignment, I implemented two functions to draw the wireframe and filled circles. For the filled circle function, drawFilledCircle, I created a loop to create a new triangle at a new angle based on the radius of the circle, the current number of vertices, and the total vertices. This loop would continue until the variable for the number of triangles to be used was reached.  
+	I implemented a similar function for the wireframe circle, drawWireframeCircle, although the main difference was that I was using GL\_LINE\_LOOP instead of GL\_POLYGON. One other addition was the setting of the lines width, which occurred before the main loop of the function.   
+Additionally, I also implemented a function to allow for the player to increase and decrease the number of triangles. This was done by utilizing a keyboard method, which was then called in main using OpenGL’s glutKeyboardFunc callback. This keyboard method checked if the user had pressed either the \+ or \- key using a switch statement. If the user had pressed the \+ key, on either the keyboard or the number pad, the number of vertices on the drawn image would increase by 1\. Likewise, if the user pressed the \- key on the keyboard or the number pad, the number of vertices would decrease by 1\. This was capped at a range from \[3,100\], inclusive.    
+Finally, I drew my picture by calling the functions drawFilledCircle and drawWireframeCircle in the display function, and filling out the functions x,y, radius, and line width based on what I wanted to draw.   

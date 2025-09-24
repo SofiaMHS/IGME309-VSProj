@@ -12,7 +12,7 @@
 //declare initiale variables
 int screenWidth;
 int screenHeight;
-float tris;
+float tris = 50;
 
 
 void init(void) {
@@ -20,18 +20,22 @@ void init(void) {
     //set initial variables' values
     screenWidth = 800;
     screenHeight = 800;
-    tris = 50;
-
 }
 
 void drawFilledCircle(float red, float green, float blue, float center_x, float center_y, float radius) {
-
+   
+    //set the circle's color
     glColor3f(red, green, blue);
+    //begin the drawing loop
     glBegin(GL_POLYGON);
 
     for (int i = 0; i <= tris; i++) {
         
+        //the angle of each of the verticies is determined by the current number of drawn 
+        //verticies divided by the number of total verticies, multiplied by 2 * pi(approx) 
         float angle = (float)i / tris * 2.0f * 3.14f;
+        //the new shape is drawn at the center x value plus the radius times the cosine, or x coord,
+        //of the angle, and at the center y value plus the radius times the sine, or y coord, of the angle
         glVertex2f(center_x + radius * cos(angle),center_y + radius * sin(angle));
     }
     glEnd();
@@ -40,17 +44,28 @@ void drawFilledCircle(float red, float green, float blue, float center_x, float 
 
 void drawWireframeCircle(float red, float green, float blue, float center_x, float center_y, float radius, float lineWidth) {
 
+    //set the circle's color
     glColor3f(red, green, blue);
+    //set the line width of the circle
     glLineWidth(lineWidth);
+    //begin the drawing loop
     glBegin(GL_LINE_LOOP);
 
+    //for loop to draw the circle
     for (int i = 0; i <= tris; i++) {
 
+        //the angle of each of the verticies is determined by the current number of drawn 
+        //verticies divided by the number of total verticies, multiplied by 2 * pi(approx) 
         float angle = (float)i / tris * 2.0f * 3.14f;
+        //the new shape is drawn at the center x value plus the radius times the cosine, or x coord,
+        //of the angle, and at the center y value plus the radius times the sine, or y coord, of the angle
         glVertex2f(center_x + radius * cos(angle), center_y + radius * sin(angle));
     }
+    //end the drawing loop
     glEnd();
 }
+
+
 
 void reshape(int width, int height) {
 
@@ -81,56 +96,24 @@ void display(void)
     glClearColor(1.0, 1.0, 1.0, 0.0);
     // wipe the entire color buffer to the current clear color.
     glClear(GL_COLOR_BUFFER_BIT);
-
-    /*
-    glColor3f(1.0f, 0.0f, 0.0f); // red
-    glBegin(GL_TRIANGLES);
-    //left vertex - x slightly below the origin, y slightly above origin
-    glVertex2f(screenWidth / 2 - screenWidth / 4, screenHeight / 2 + screenWidth / 4);
-    //right vertex - x slightly above the origin, y slightly above origin
-    glVertex2f(screenWidth / 2 + screenWidth / 4, screenHeight / 2 + screenWidth / 4);
-    //middle vertex - x at the origin, y slightly below origin
-    glVertex2f(screenWidth / 2, screenHeight / 2 - screenWidth / 4);
-    */
-
-    //drawFilledCircle(0.0f,0.0f,1.0f, screenWidth / 2, screenHeight / 2 - screenWidth / 4, 200.0f);
-    //drawWireframeCircle(0.33f, 0.23f, 0.09f, screenWidth / 2, screenHeight / 2 - screenWidth / 4, 100.0f, 5.0f);
-    //400.0f, 500.0f
+    
+    // calls to draw the image using the drawFilledCircle and drawWireframeCircle functions
     //ears - left
-    //drawWireframeCircle(0.24f, 0.13f, 0.06f, 230.0f, 450.0f, 40.0f, 5.0f);
-    drawFilledCircle(0.33f, 0.23f, 0.09f, 230.0f, 450.0f, 40.0f);
-    drawFilledCircle(0.33f, 0.23f, 0.09f, 190.0f, 450.0f, 40.0f);
-
-    drawFilledCircle(0.33f, 0.23f, 0.09f, 250.0f, 500.0f, 60.0f);
-    drawFilledCircle(0.33f, 0.23f, 0.09f, 210.0f, 500.0f, 60.0f);
-    //drawWireframeCircle(0.24f, 0.13f, 0.06f, 250.0f, 500.0f, 60.0f, 5.0f);
-
-
-    drawFilledCircle(0.33f, 0.23f, 0.09f, 270.0f, 550.0f, 80.0f);
-    drawFilledCircle(0.33f, 0.23f, 0.09f, 230.0f, 550.0f, 80.0f);
-   // drawWireframeCircle(0.24f, 0.13f, 0.06f, 270.0f, 550.0f, 80.0f, 5.0f);
-   
+    drawFilledCircle(0.33f, 0.23f, 0.09f, 270.0f, 570.0f, 60.0f);
+    drawWireframeCircle(0.24f, 0.13f, 0.06f, 270.0f, 570.0f, 60.0f, 5.0f);
+    drawFilledCircle(0.54f, 0.36f, 0.12f, 270.0f, 570.0f, 40.0f);
 
     //ears - right
-   // drawWireframeCircle(0.24f, 0.13f, 0.06f, 570.0f, 450.0f, 40.0f, 5.0f);
-    drawFilledCircle(0.33f, 0.23f, 0.09f, 570.0f, 450.0f, 40.0f);
-    drawFilledCircle(0.33f, 0.23f, 0.09f, 610.0f, 450.0f, 40.0f);
-
-
-    drawFilledCircle(0.33f, 0.23f, 0.09f, 550.0f, 500.0f, 60.0f);
-    drawFilledCircle(0.33f, 0.23f, 0.09f, 590.0f, 500.0f, 60.0f);
-  //  drawWireframeCircle(0.24f, 0.13f, 0.06f, 550.0f, 500.0f, 60.0f, 5.0f);
-
-
-    drawFilledCircle(0.33f, 0.23f, 0.09f, 530.0f, 550.0f, 80.0f);
-    drawFilledCircle(0.33f, 0.23f, 0.09f, 570.0f, 550.0f, 80.0f);
-   // drawWireframeCircle(0.24f, 0.13f, 0.06f, 530.0f, 550.0f, 80.0f, 5.0f);
+    drawFilledCircle(0.33f, 0.23f, 0.09f, 530.0f, 570.0f, 60.0f);
+    drawWireframeCircle(0.24f, 0.13f, 0.06f, 530.0f, 570.0f, 60.0f, 5.0f);
+    drawFilledCircle(0.54f, 0.36f, 0.12f, 530.0f, 570.0f, 40.0f);
 
 
     //body
     drawWireframeCircle(0.24f, 0.13f, 0.06f, 400.0f, 500.0f, 150.0f, 5.0f);
 
     drawFilledCircle(0.33f, 0.23f, 0.09f, 400.0f, 300.0f, 200.0f);
+    drawFilledCircle(0.54f, 0.36f, 0.12f, 400.0f, 250.0f, 150.0f);
     drawWireframeCircle(0.24f, 0.13f, 0.06f, 400.0f, 300.0f, 200.0f, 5.0f);
 
     drawFilledCircle(0.33f, 0.23f, 0.09f, 400.0f, 500.0f, 150.0f);
@@ -158,10 +141,10 @@ void display(void)
 
     //left paw - top
     drawFilledCircle(0.24f, 0.13f, 0.06f, 300.0f, 380.0f, 50.0f); 
-    drawFilledCircle(0.0f, 0.0f, 0.0f, 300.0f, 360.0f, 25.0f);//-20
-    drawFilledCircle(0.0f, 0.0f, 0.0f, 300.0f, 410.0f, 10.0f); //+50
-    drawFilledCircle(0.0f, 0.0f, 0.0f, 270.0f, 390.0f, 10.0f);//+40
-    drawFilledCircle(0.0f, 0.0f, 0.0f, 330.0f, 390.0f, 10.0f);//+40
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 300.0f, 360.0f, 25.0f);
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 300.0f, 410.0f, 10.0f); 
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 270.0f, 390.0f, 10.0f);
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 330.0f, 390.0f, 10.0f);
 
     //right paw - bottom
     drawFilledCircle(0.24f, 0.13f, 0.06f, 580.0f, 180.0f, 80.0f);
@@ -173,10 +156,10 @@ void display(void)
 
     //right paw - top
     drawFilledCircle(0.24f, 0.13f, 0.06f, 500.0f, 380.0f, 50.0f);
-    drawFilledCircle(0.0f, 0.0f, 0.0f, 500.0f, 360.0f, 25.0f);//-20
-    drawFilledCircle(0.0f, 0.0f, 0.0f, 500.0f, 410.0f, 10.0f); //+50
-    drawFilledCircle(0.0f, 0.0f, 0.0f, 470.0f, 390.0f, 10.0f);//+40
-    drawFilledCircle(0.0f, 0.0f, 0.0f, 530.0f, 390.0f, 10.0f);//+40
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 500.0f, 360.0f, 25.0f);
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 500.0f, 410.0f, 10.0f);
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 470.0f, 390.0f, 10.0f);
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 530.0f, 390.0f, 10.0f);
 
     glEnd();
 
@@ -184,6 +167,44 @@ void display(void)
 
 }
 
+void keyboard(unsigned char key, int x, int y) {
+   
+    //switch statement to check what keys the user presses
+    //and how to respond
+    switch (key) {
+
+        //if the user presses the esc key, the program exits
+    case 27:
+        exit(0);
+        break;
+
+        //if the user presses the + key, then the number of 
+        //verticies, or tris used to draw both the filled and
+        //wireframe circles increases by 1 unless it is 100
+    case '+':
+        if (tris < 100) {
+            tris += 1;
+            //glutPostRedisplay called to ensure the change in 
+            //verticies is shown without much delay
+            glutPostRedisplay();
+
+        }
+        break;
+
+        //if the user presses the - key, then the number of 
+        //verticies, or tris used to draw both the filled and
+        //wireframe circles decreases by 1 unless it is 3
+    case '-':
+        if (tris > 3) {
+            tris -= 1;
+            //glutPostRedisplay called to ensure the change in 
+            //verticies is shown without much delay
+            glutPostRedisplay();
+
+        }
+        break;
+    }
+}
 
 
 
@@ -214,6 +235,11 @@ int main(int argc, char* argv[])
 
     //call the display function to draw necessary shapes
     glutDisplayFunc(display);
+
+    //call the keyboard function to check keyboard inputs
+    glutKeyboardFunc(keyboard);
+
+
 
     //start the glut main loop
     glutMainLoop();
