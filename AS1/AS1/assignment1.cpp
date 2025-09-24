@@ -12,13 +12,15 @@
 //declare initiale variables
 int screenWidth;
 int screenHeight;
+float tris;
 
 
 void init(void) {
 
     //set initial variables' values
-    screenWidth = 400;
-    screenHeight = 400;
+    screenWidth = 800;
+    screenHeight = 800;
+    tris = 50;
 
 }
 
@@ -27,14 +29,12 @@ void drawFilledCircle(float red, float green, float blue, float center_x, float 
     glColor3f(red, green, blue);
     glBegin(GL_POLYGON);
 
-    float tris = 10;
-
     for (int i = 0; i <= tris; i++) {
         
         float angle = (float)i / tris * 2.0f * 3.14f;
         glVertex2f(center_x + radius * cos(angle),center_y + radius * sin(angle));
     }
-
+    glEnd();
 }
 
 
@@ -44,14 +44,12 @@ void drawWireframeCircle(float red, float green, float blue, float center_x, flo
     glLineWidth(lineWidth);
     glBegin(GL_LINE_LOOP);
 
-    float tris = 10;
-
     for (int i = 0; i <= tris; i++) {
 
         float angle = (float)i / tris * 2.0f * 3.14f;
         glVertex2f(center_x + radius * cos(angle), center_y + radius * sin(angle));
     }
-
+    glEnd();
 }
 
 void reshape(int width, int height) {
@@ -96,7 +94,89 @@ void display(void)
     */
 
     //drawFilledCircle(0.0f,0.0f,1.0f, screenWidth / 2, screenHeight / 2 - screenWidth / 4, 200.0f);
-    drawWireframeCircle(0.0f, 0.0f, 1.0f, screenWidth / 2, screenHeight / 2 - screenWidth / 4, 100.0f, 5.0f);
+    //drawWireframeCircle(0.33f, 0.23f, 0.09f, screenWidth / 2, screenHeight / 2 - screenWidth / 4, 100.0f, 5.0f);
+    //400.0f, 500.0f
+    //ears - left
+    //drawWireframeCircle(0.24f, 0.13f, 0.06f, 230.0f, 450.0f, 40.0f, 5.0f);
+    drawFilledCircle(0.33f, 0.23f, 0.09f, 230.0f, 450.0f, 40.0f);
+    drawFilledCircle(0.33f, 0.23f, 0.09f, 190.0f, 450.0f, 40.0f);
+
+    drawFilledCircle(0.33f, 0.23f, 0.09f, 250.0f, 500.0f, 60.0f);
+    drawFilledCircle(0.33f, 0.23f, 0.09f, 210.0f, 500.0f, 60.0f);
+    //drawWireframeCircle(0.24f, 0.13f, 0.06f, 250.0f, 500.0f, 60.0f, 5.0f);
+
+
+    drawFilledCircle(0.33f, 0.23f, 0.09f, 270.0f, 550.0f, 80.0f);
+    drawFilledCircle(0.33f, 0.23f, 0.09f, 230.0f, 550.0f, 80.0f);
+   // drawWireframeCircle(0.24f, 0.13f, 0.06f, 270.0f, 550.0f, 80.0f, 5.0f);
+   
+
+    //ears - right
+   // drawWireframeCircle(0.24f, 0.13f, 0.06f, 570.0f, 450.0f, 40.0f, 5.0f);
+    drawFilledCircle(0.33f, 0.23f, 0.09f, 570.0f, 450.0f, 40.0f);
+    drawFilledCircle(0.33f, 0.23f, 0.09f, 610.0f, 450.0f, 40.0f);
+
+
+    drawFilledCircle(0.33f, 0.23f, 0.09f, 550.0f, 500.0f, 60.0f);
+    drawFilledCircle(0.33f, 0.23f, 0.09f, 590.0f, 500.0f, 60.0f);
+  //  drawWireframeCircle(0.24f, 0.13f, 0.06f, 550.0f, 500.0f, 60.0f, 5.0f);
+
+
+    drawFilledCircle(0.33f, 0.23f, 0.09f, 530.0f, 550.0f, 80.0f);
+    drawFilledCircle(0.33f, 0.23f, 0.09f, 570.0f, 550.0f, 80.0f);
+   // drawWireframeCircle(0.24f, 0.13f, 0.06f, 530.0f, 550.0f, 80.0f, 5.0f);
+
+
+    //body
+    drawWireframeCircle(0.24f, 0.13f, 0.06f, 400.0f, 500.0f, 150.0f, 5.0f);
+
+    drawFilledCircle(0.33f, 0.23f, 0.09f, 400.0f, 300.0f, 200.0f);
+    drawWireframeCircle(0.24f, 0.13f, 0.06f, 400.0f, 300.0f, 200.0f, 5.0f);
+
+    drawFilledCircle(0.33f, 0.23f, 0.09f, 400.0f, 500.0f, 150.0f);
+
+
+    //face - left
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 320.0f, 550.0f, 25.0f);
+    drawWireframeCircle(1.0f, 1.0f, 1.0f, 320.0f, 550.0f, 25.0f, 5.0f);
+    drawFilledCircle(1.0f, 1.0f, 1.0f, 340.0f, 555.0f, 5.0f);
+
+    //face - right
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 480.0f, 550.0f, 25.0f);
+    drawWireframeCircle(1.0f, 1.0f, 1.0f, 480.0f, 550.0f, 25.0f, 5.0f);
+    drawFilledCircle(1.0f, 1.0f, 1.0f, 500.0f, 555.0f, 5.0f);
+
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 400.0f, 500.0f, 25.0f);
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 400.0f, 470.0f, 10.0f);
+
+    //left paw - bottom
+    drawFilledCircle(0.24f, 0.13f, 0.06f, 220.0f, 180.0f, 80.0f);
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 220.0f, 160.0f, 50.0f);
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 220.0f, 230.0f, 15.0f);
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 190.0f, 220.0f, 15.0f);
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 250.0f, 220.0f, 15.0f);
+
+    //left paw - top
+    drawFilledCircle(0.24f, 0.13f, 0.06f, 300.0f, 380.0f, 50.0f); 
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 300.0f, 360.0f, 25.0f);//-20
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 300.0f, 410.0f, 10.0f); //+50
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 270.0f, 390.0f, 10.0f);//+40
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 330.0f, 390.0f, 10.0f);//+40
+
+    //right paw - bottom
+    drawFilledCircle(0.24f, 0.13f, 0.06f, 580.0f, 180.0f, 80.0f);
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 580.0f, 160.0f, 50.0f);
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 580.0f, 230.0f, 15.0f);
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 550.0f, 220.0f, 15.0f);
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 610.0f, 220.0f, 15.0f);
+
+
+    //right paw - top
+    drawFilledCircle(0.24f, 0.13f, 0.06f, 500.0f, 380.0f, 50.0f);
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 500.0f, 360.0f, 25.0f);//-20
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 500.0f, 410.0f, 10.0f); //+50
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 470.0f, 390.0f, 10.0f);//+40
+    drawFilledCircle(0.0f, 0.0f, 0.0f, 530.0f, 390.0f, 10.0f);//+40
 
     glEnd();
 
