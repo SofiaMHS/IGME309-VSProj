@@ -7,7 +7,7 @@ private:
 	unsigned int triNum;
 
 	float* vertices;
-	unsigned int* indices;
+	unsigned int* indices;//
 	float* vertColors;
 
 	// In the future, we will define more vertex and triangle related parameters...

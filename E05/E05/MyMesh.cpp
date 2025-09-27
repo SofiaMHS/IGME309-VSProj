@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <time.h>
+#include <string>
 using namespace std;
 
 MyMesh::MyMesh()
@@ -35,15 +36,26 @@ void MyMesh::load(char* fileName)
 	vertColors = new float[100 * 3];
 
 	ifstream file(fileName);
+	string line;
+	int count = 0;
 
 	if (!file.is_open())
 	{
 		/****************************************/
 		// Write your code below
+		while (std::getline(file, line)) {
+			if (line[0] == 'v') {
+				vertices[count] = line[1];
+				vertices[count + 1] = line[2];
+			}
+			else if (line[0] == 'f') {
+				for (int i = 1; i <= line.size(); i++) {
 
-		// Write your code above
-		/****************************************/
-	}
+					indices[i] = line[i];
+				}
+			}
+
+			count += 1;
 
 	/****************************************/
 	// Write your code below
