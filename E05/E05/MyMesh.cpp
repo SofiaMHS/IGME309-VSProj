@@ -5,6 +5,7 @@
 #include <fstream>
 #include <time.h>
 #include <string>
+#include <sstream>
 using namespace std;
 
 MyMesh::MyMesh()
@@ -36,30 +37,51 @@ void MyMesh::load(char* fileName)
 	vertColors = new float[100 * 3];
 
 	ifstream file(fileName);
-	string line;
-	int count = 0;
+
 
 	if (!file.is_open())
 	{
 		/****************************************/
 		// Write your code below
-		while (std::getline(file, line)) {
-			if (line[0] == 'v') {
-				vertices[count] = line[1];
-				vertices[count + 1] = line[2];
-			}
-			else if (line[0] == 'f') {
-				for (int i = 1; i <= line.size(); i++) {
-
-					indices[i] = line[i];
-				}
-			}
-
-			count += 1;
-
+		cout << "Error opening file: " << fileName << endl;
+	}
+	string line;
+	int vCount = 0;
+	int iCount = 0; 
 	/****************************************/
 	// Write your code below
+	while (getline(file, line)) {
 
+		istringstream iss(line);
+		string type;
+		iss >> type;
+
+		if (type == "v") {
+			float x;
+			float y; 
+			iss >> x >> y; 
+			vertices[vCount] = x - 1;
+			vertices[vCount + 1] = y - 1;
+			vertNum += 2; 
+
+			vCount += 2;
+		}
+		else if (type == "f") {
+
+			int v1;
+			int v2;
+			int v3; 
+
+			iss >> v1 >> v2 >> v3; 
+			indices[iCount] = v1;
+			indices[iCount + 1] = v2;
+			indices[iCount + 2] = v3;
+
+			triNum += 3; 
+			iCount += 3;
+		}
+
+	}
 	// Write your code above
 	/****************************************/
 
@@ -71,6 +93,7 @@ void MyMesh::load(char* fileName)
 		vertColors[i * 3 + 2] = float(rand()) / (RAND_MAX + 1);
 	}
 }
+
 
 void MyMesh::load(const unsigned int p_vertNum, const unsigned int p_triNum, const float* p_vertices, const unsigned int* p_indices)
 {
