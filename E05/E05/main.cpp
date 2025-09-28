@@ -13,7 +13,7 @@ using namespace std;
 float canvasSize[] = { 10.0f, 10.0,};
 int rasterSize[] = { 600, 600 };
 
-const float* p_vertices = new float[84]{ 1.0, 7.0,
+const float* p_vertices = new float[100]{ 1.0, 7.0,
 1.0, 6.5
 ,2.0, 7.0
 ,2.0, 6.5
@@ -57,7 +57,7 @@ const float* p_vertices = new float[84]{ 1.0, 7.0,
 ,7.75, 4.0
 };
 
-const unsigned int* p_indices = new unsigned int[109] { 1, 2, 5
+const unsigned int* p_indices = new unsigned int[200] { 1, 2, 5
 ,1, 5, 3
 ,3, 5, 6
 ,3, 6, 4

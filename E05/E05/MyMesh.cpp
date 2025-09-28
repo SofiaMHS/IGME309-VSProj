@@ -133,17 +133,18 @@ void MyMesh::update()
 
 void MyMesh::draw()
 {
+	
 	for (int i = 0; i < triNum; ++i)
 	{
 		glBegin(GL_TRIANGLES);
 		glColor3fv(vertColors + indices[i * 3 + 0] * 3);
-		glVertex2fv(vertices + indices[i * 3 + 0] * 2);
+		glVertex2fv(vertices+ indices[i * 3 + 0] * 2);
 
 		glColor3fv(vertColors + indices[i * 3 + 1] * 3);
-		glVertex2fv(vertices + indices[i * 3 + 1] * 2);
+		glVertex2fv(vertices+ indices[i * 3 + 1] * 2);
 
 		glColor3fv(vertColors + indices[i * 3 + 2] * 3);
-		glVertex2fv(vertices + indices[i * 3 + 2] * 2);
+		glVertex2fv(vertices +indices[i * 3 + 2] * 2);
 		glEnd();
 	}
 }
