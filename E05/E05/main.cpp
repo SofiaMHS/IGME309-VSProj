@@ -19,7 +19,7 @@ MyMesh g_mesh = MyMesh();
 void init(void)
 {
 	// load the mesh data to g_mesh
-	char fileName[19] = { "../Debug/data2.obj" };
+	char fileName[19] = { "../Debug/data2.obj"};
 
 	g_mesh.load(fileName);
 }
