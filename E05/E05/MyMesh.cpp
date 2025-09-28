@@ -38,55 +38,72 @@ void MyMesh::load(char* fileName)
 
 	ifstream file(fileName);
 
-
+	//if there is an error opening the file
 	if (!file.is_open())
 	{
-		/****************************************/
-		// Write your code below
+		//an error message is displayed if file can't be opened
 		cout << "Error opening file: " << fileName << endl;
 	}
+	//line and counts created
 	string line;
+
+	//counts determine at which index on the vertices and indices array
+	//to add data
 	int vCount = 0;
 	int iCount = 0; 
-	/****************************************/
-	// Write your code below
+
+	//while the file is successfully opened and lines are being read
 	while (getline(file, line)) {
 
+		//line streamed and stored through istringstream so that
+		//data can be extracted using >>
 		istringstream iss(line);
 		string type;
+		//first section of each line will either be 'v' or 'f'
+		//so type string is used to determine how to handle the data
 		iss >> type;
 
+		//if the line is a vertex
 		if (type == "v") {
+			//creates two new float variables, then
+			//uses >> to extract the x and y values from
+			//the data
 			float x;
 			float y; 
 			iss >> x >> y; 
+
+			//adds the x and y values to the vertices array
 			vertices[vCount] = x;
 			vertices[vCount + 1] = y;
 
+			//increases vertex count by 1
 			vertNum += 1; 
-
+			//increases starting index for vertices array by 2
 			vCount += 2;
 		}
+		//if the line is a face
 		else if (type == "f") {
 
+			//creates new int variables, then
+			//uses >> to extract the faces from the data
 			int v1;
 			int v2;
 			int v3; 
-
 			iss >> v1 >> v2 >> v3; 
-
 			
-			indices[iCount] = v1;
-			indices[iCount + 1] = v2;
-			indices[iCount + 2] = v3;
+			//data is added to the indices, subtract 1
+			//to account for .obj indices counted from 1
+			indices[iCount] = v1 - 1;
+			indices[iCount + 1] = v2 - 1;
+			indices[iCount + 2] = v3 - 1;
 
+			//increases tri count by 1
 			triNum += 1; 
+			//increases starting index for indices array by 3
 			iCount += 3;
 		}
 
 	}
-	// Write your code above
-	/****************************************/
 
 	// generate random vertex colors
 	for (unsigned int i = 0; i < vertNum; i++)

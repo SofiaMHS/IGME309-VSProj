@@ -13,6 +13,8 @@ using namespace std;
 float canvasSize[] = { 10.0f, 10.0,};
 int rasterSize[] = { 600, 600 };
 
+//Test Arrays
+/*
 const float* p_vertices = new float[100]{ 1.0, 7.0,
 1.0, 6.5
 ,2.0, 7.0
@@ -57,7 +59,8 @@ const float* p_vertices = new float[100]{ 1.0, 7.0,
 ,7.75, 4.0
 };
 
-const unsigned int* p_indices = new unsigned int[200] { 1, 2, 5
+const unsigned int* p_indices = new unsigned int[200] {
+1, 2, 5
 ,1, 5, 3
 ,3, 5, 6
 ,3, 6, 4
@@ -93,6 +96,8 @@ const unsigned int* p_indices = new unsigned int[200] { 1, 2, 5
 ,37 ,41, 38
 ,38 ,41, 40
 ,41 ,39, 40 };
+*/
+
 
 MyMesh g_mesh = MyMesh();
 
@@ -100,9 +105,9 @@ MyMesh g_mesh = MyMesh();
 void init(void)
 {
 	// load the mesh data to g_mesh
+	//NOTE: Due to the .obj files being located in the debug file, they will need to 
+	//be replaced in the folder when pulling from a github
 	char fileName[19] = { "../Debug/data2.obj"};
-
-	//g_mesh.load(42, 36, p_vertices, p_indices);  
 
 	g_mesh.load(fileName);
 }
