@@ -60,9 +60,10 @@ void MyMesh::load(char* fileName)
 			float x;
 			float y; 
 			iss >> x >> y; 
-			vertices[vCount] = x - 1;
-			vertices[vCount + 1] = y - 1;
-			vertNum += 2; 
+			vertices[vCount] = x;
+			vertices[vCount + 1] = y;
+
+			vertNum += 1; 
 
 			vCount += 2;
 		}
@@ -73,11 +74,13 @@ void MyMesh::load(char* fileName)
 			int v3; 
 
 			iss >> v1 >> v2 >> v3; 
+
+			
 			indices[iCount] = v1;
 			indices[iCount + 1] = v2;
 			indices[iCount + 2] = v3;
 
-			triNum += 3; 
+			triNum += 1; 
 			iCount += 3;
 		}
 
