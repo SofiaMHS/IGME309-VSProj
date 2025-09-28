@@ -102,9 +102,9 @@ void init(void)
 	// load the mesh data to g_mesh
 	char fileName[19] = { "../Debug/data2.obj"};
 
-	g_mesh.load(42, 36, p_vertices, p_indices);  
+	//g_mesh.load(42, 36, p_vertices, p_indices);  
 
-	//g_mesh.load(fileName);
+	g_mesh.load(fileName);
 }
 
 
