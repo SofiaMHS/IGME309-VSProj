@@ -23,4 +23,5 @@ unsigned int PolyObject::getVertNum()
 
 void PolyObject::draw()
 {
+	
 }
