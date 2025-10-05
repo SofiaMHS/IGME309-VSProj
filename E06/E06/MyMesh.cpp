@@ -107,14 +107,18 @@ void MyMesh::draw()
 	// ********************************************************
 	// Write code below
 	// Draw shape with buffer data
+
 	glBindBuffer(GL_ARRAY_BUFFER, vboVerts); 
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	glVertexPointer(2, GL_FLOAT, 0, NULL);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vboColors);
-	glColorPointer(3,GL_FLOAT,0,NULL);
+	glColorPointer(3,GL_FLOAT,0, NULL);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboElems);
-	glDrawElements(GL_TRIANGLES, triNum, GL_UNSIGNED_SHORT, NULL);
+	glDrawElements(GL_TRIANGLES, triNum * 3, GL_UNSIGNED_INT, NULL);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 
 	// Write code above
