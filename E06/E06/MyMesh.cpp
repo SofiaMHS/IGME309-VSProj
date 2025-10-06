@@ -22,12 +22,10 @@ MyMesh::~MyMesh()
 		delete[] vertColors;
 
 	// ********************************************************
-	// Write code below
-	// Delete GPU buffers
+	// Deletes all GPU buffers attached to the buffer ids
 	glDeleteBuffers(1,&vboVerts); 
 	glDeleteBuffers(1, &vboColors);
 	glDeleteBuffers(1, &iboElems);
-	// Write code above
 	// ********************************************************
 }
 
@@ -71,26 +69,34 @@ void MyMesh::load(const unsigned int p_vertNum, const unsigned int p_triNum, con
 
 void MyMesh::createOrUpdateGPU()
 {
-	// ********************************************************
-	// Write code below
 	// Create buffers
+
+	//1 buffer is generated with the vboVerts id
 	glGenBuffers(1, &vboVerts); 
+	//new buffer is binded
 	glBindBuffer(GL_ARRAY_BUFFER, vboVerts); 
+	//upload data to the buffer in the GPU
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertNum * 3, vertices, GL_STATIC_DRAW);
+	//clean up the buffer
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
-
+	//1 buffer is generated with the vboColors id
 	glGenBuffers(1, &vboColors);
+	//new buffer is binded
 	glBindBuffer(GL_ARRAY_BUFFER, vboColors);
+	//upload data to the buffer in the GPU
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertNum * 3, vertColors, GL_STATIC_DRAW);
+	//clean up the buffer
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	//1 buffer is generated with the vboColors id
 	glGenBuffers(1, &iboElems);
-	glBindBuffer(GL_ARRAY_BUFFER, iboElems);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(unsigned int) * triNum * 3, indices, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	// Write code above
-	// ********************************************************
+	//new buffer is binded
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboElems);
+	//upload data to the buffer in the GPU
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * triNum * 3, indices, GL_STATIC_DRAW);
+	//clean up the buffer
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void MyMesh::update()
@@ -104,25 +110,24 @@ void MyMesh::draw()
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
 
-	// ********************************************************
-	// Write code below
+
 	// Draw shape with buffer data
 
+	//vertex is drawn using the vboVerts data, which contains the data from vertices
 	glBindBuffer(GL_ARRAY_BUFFER, vboVerts); 
 	glVertexPointer(2, GL_FLOAT, 0, NULL);
 
+	//colors are chosen based on the vboColors data, which contains data from vertColors
 	glBindBuffer(GL_ARRAY_BUFFER, vboColors);
 	glColorPointer(3,GL_FLOAT,0, NULL);
 
+	//indices/elements are drawn using the iboElems buffer, which contains data from indicies
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboElems);
 	glDrawElements(GL_TRIANGLES, triNum * 3, GL_UNSIGNED_INT, NULL);
 
+	//clean up buffers used based on type
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-
-	// Write code above
-	// ********************************************************
 
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
