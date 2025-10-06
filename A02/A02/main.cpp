@@ -40,10 +40,11 @@ void display(void)
     glClearColor(1.0, 1.0, 1.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glColor3fv(color);
+    //glColor3fv(color);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    /*
     if (numOfVertices > 0 && numOfVertices < 3) {
 
         glBegin(GL_LINE_STRIP);
@@ -58,9 +59,13 @@ void display(void)
             glVertex2fv(v + i * 2);
         glEnd();
     }
+    */
+
+    myObj.draw();
 
     drawCursor();
     glutSwapBuffers();
+
 }
 
 void reshape(int w, int h)
@@ -82,6 +87,7 @@ void mouse(int button, int state, int x, int y)
         //comment out when ready to test polygon
 
         
+        /*
         if (numOfVertices >= 3)
             numOfVertices = 0;
 
@@ -92,11 +98,12 @@ void mouse(int button, int state, int x, int y)
 
         numOfVertices++;
         glutPostRedisplay();
-        /*
+        */
+        
         mousePos[0] = (float)x / rasterSize[0] * canvasSize[0];
         mousePos[1] = (float)(rasterSize[1] - y) / rasterSize[1] * canvasSize[1];
         myObj.addVertex(mousePos[0], mousePos[1]); 
-        */
+     
     }
 }
 
@@ -123,7 +130,7 @@ void menu(int value)
 {
     switch (value) {
     case 0: // clear
-        numOfVertices = 0;
+        //somehow clear vertices
         glutPostRedisplay();
         break;
     case 1: //exit
@@ -172,6 +179,7 @@ int main(int argc, char* argv[])
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowSize(rasterSize[0], rasterSize[1]);
     glutCreateWindow("Mouse Event - draw a triangle");
+
 
     glutReshapeFunc(reshape);
     glutDisplayFunc(display);
