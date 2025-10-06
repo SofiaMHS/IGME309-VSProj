@@ -1,11 +1,6 @@
 
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <GL/freeglut.h>
-#endif
-
 #include <iostream>
+#include "PolygonObject.h"
 using namespace std;
 
 float canvasSize[] = { 10.0f, 10.0f };
@@ -17,6 +12,9 @@ float v[2 * 3];
 float color[3];
 
 float mousePos[2];
+
+
+PolyObject myObj = PolyObject();
 
 void init(void)
 {
@@ -81,6 +79,9 @@ void reshape(int w, int h)
 void mouse(int button, int state, int x, int y)
 {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        //comment out when ready to test polygon
+
+        
         if (numOfVertices >= 3)
             numOfVertices = 0;
 
@@ -91,6 +92,11 @@ void mouse(int button, int state, int x, int y)
 
         numOfVertices++;
         glutPostRedisplay();
+        /*
+        mousePos[0] = (float)x / rasterSize[0] * canvasSize[0];
+        mousePos[1] = (float)(rasterSize[1] - y) / rasterSize[1] * canvasSize[1];
+        myObj.addVertex(mousePos[0], mousePos[1]); 
+        */
     }
 }
 
@@ -123,6 +129,7 @@ void menu(int value)
     case 1: //exit
         exit(0);
     case 2: // red
+        //
         color[0] = 1.0f;
         color[1] = 0.0f;
         color[2] = 0.0f;

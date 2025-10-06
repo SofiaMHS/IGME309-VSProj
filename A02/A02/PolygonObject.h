@@ -1,5 +1,11 @@
 #pragma once
 #include <vector>
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/freeglut.h>
+#endif
+
 
 using namespace std;
 
@@ -9,6 +15,7 @@ private:
     float* vertices; // all vertices in C++ vector
     float* color;    // color of this polygon
     int vertNum; 
+    float mousePos[2];
 public:
     PolyObject();
     ~PolyObject();
