@@ -8,6 +8,7 @@ class PolyObject
 private:
     float* vertices; // all vertices in C++ vector
     float* color;    // color of this polygon
+    int vertNum; 
 public:
     PolyObject();
     ~PolyObject();
