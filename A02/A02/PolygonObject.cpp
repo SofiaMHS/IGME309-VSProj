@@ -30,8 +30,8 @@ void PolyObject::addVertex(float x, float y)
 	//look at mouse function
 	mousePos[0] = x;
 	mousePos[1] = y;
-	vertices[vertNum * 2 + vertNum] = x; //mousePos[0]
-	vertices[vertNum * 2 + vertNum + 1] = y;//mousePos[1] 
+	vertices[vertNum * 2] = x; //mousePos[0]
+	vertices[vertNum * 2 + 1] = y;//mousePos[1] 
 	vertNum++;
 
 
@@ -42,10 +42,15 @@ void PolyObject::setColor(float cr, float cg, float cb)
 {
 	//check menu function
 	//check display function
+	color[0] = cr;
+	color[1] = cg;
+	color[2] = cb; 
 }
 
 unsigned int PolyObject::getVertNum()
 {
+	//could clear vertNum here
+	//ex. vertNum = 0
 	return vertNum;
 }
 
@@ -63,7 +68,7 @@ void PolyObject::draw()
 		glVertex2fv(mousePos); //can't update mouse position - problem
 		glEnd(); 
 	}
-	else if (vertNum == 1 || vertNum == 2) {
+	else if (vertNum == 1) {
 		glBegin(GL_LINES);
 		for (int i = 0; i < vertNum; i++)
 		{
@@ -72,7 +77,7 @@ void PolyObject::draw()
 		glVertex2fv(mousePos);//can't update mouse position - problem
 		glEnd();
 	}
-	else if (vertNum >= 3) {
+	else if (vertNum >= 2) {
 		glBegin(GL_POLYGON);
 		for (int i = 0; i < vertNum; i++) {//adding in odd positions
 			glVertex2fv(vertices + i * 2);
@@ -87,4 +92,31 @@ void PolyObject::updateMousePos(float x, float y)
 {
 	mousePos[0] = x;
 	mousePos[1] = y; //updates mouse pos, only for +3 vertices? 
+}
+
+void PolyObject::polyMenu(int value)
+{
+	switch (value) {
+	case 0: // clear
+		vertNum = 0; 
+		glutPostRedisplay();
+		break;
+	case 1: //exit
+		exit(0);
+	case 2: // red
+		//
+		setColor(1.0f, 0.0f, 0.0f); 
+		glutPostRedisplay();
+		break;
+	case 3: // green
+		setColor(0.0f, 1.0f, 0.0f);
+		glutPostRedisplay();
+		break;
+	case 4: // blue
+		setColor(0.0f, 0.0f, 1.0f);
+		glutPostRedisplay();
+		break;
+	default:
+		break;
+	}
 }

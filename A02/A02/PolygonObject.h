@@ -24,5 +24,6 @@ public:
     unsigned int getVertNum();                   // return the number of vertices
     void draw();                                 // draw the polygon if it’s completed
     void updateMousePos(float x, float y); 
+    void polyMenu(int value);
     //need a function to delete vertices - set vertices to nullptr?
 };
