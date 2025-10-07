@@ -23,4 +23,6 @@ public:
     void setColor(float cr, float cg, float cb); // set the color of this polygon
     unsigned int getVertNum();                   // return the number of vertices
     void draw();                                 // draw the polygon if it’s completed
+    void updateMousePos(float x, float y); 
+    //need a function to delete vertices - set vertices to nullptr?
 };

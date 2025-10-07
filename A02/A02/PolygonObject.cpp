@@ -55,30 +55,36 @@ void PolyObject::draw()
 
 	glColor3fv(color);
 
-	if (vertNum == 1) {
+	if (vertNum == 0) {
 		glBegin(GL_POINTS);
 		for (int i = 0; i < vertNum; i++) {
 			glVertex2fv(vertices + 1 * 2);
 		}
-		glVertex2fv(mousePos); 
+		glVertex2fv(mousePos); //can't update mouse position - problem
 		glEnd(); 
 	}
-	else if (vertNum == 2) {
+	else if (vertNum == 1 || vertNum == 2) {
 		glBegin(GL_LINES);
 		for (int i = 0; i < vertNum; i++)
 		{
 			glVertex2fv(vertices + i * 2);
 		}
-		glVertex2fv(mousePos);
+		glVertex2fv(mousePos);//can't update mouse position - problem
 		glEnd();
 	}
 	else if (vertNum >= 3) {
 		glBegin(GL_POLYGON);
-		for (int i = 0; i < vertNum; i++) {
+		for (int i = 0; i < vertNum; i++) {//adding in odd positions
 			glVertex2fv(vertices + i * 2);
 		}
-		glVertex2fv(mousePos);
+		glVertex2fv(mousePos);//can't update mouse position - problem
 		glEnd();
 	}
 
+}
+
+void PolyObject::updateMousePos(float x, float y)
+{
+	mousePos[0] = x;
+	mousePos[1] = y; //updates mouse pos, only for +3 vertices? 
 }

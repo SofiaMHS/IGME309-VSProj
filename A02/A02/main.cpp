@@ -114,6 +114,8 @@ void motion(int x, int y)
     mousePos[0] = (float)x / rasterSize[0] * canvasSize[0];
     mousePos[1] = (float)(rasterSize[1] - y) / rasterSize[1] * canvasSize[1];
 
+    myObj.updateMousePos(mousePos[0], mousePos[1]); 
+
     glutPostRedisplay();
 }
 
