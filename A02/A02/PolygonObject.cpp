@@ -2,23 +2,23 @@
 
 PolyObject::PolyObject()
 {
-	//will need to establish vertices 
-	// float v[2 * 3];
-	//float color[3];
-	//will need to establish colors
-	//will need to set vertNum
+
+	//create an empty array of vertices
 	vertices = new float[2 * 3] {}; 
+	//create an array for the rgb values of the color
 	color = new float[3] {1.0f,0.0f,0.0f}; 
+	//number of vertices is set to 0 
 	vertNum = 0; 
 }
 
 PolyObject::~PolyObject()
 {
-	//will need to dispose vertices
-	//will need to dispose colors
+	// dispose vertices
+	
 	if (vertices != NULL) {
 		delete[] vertices;
 	}
+	// dispose colors
 	if (vertices != NULL) {
 		delete[] color;
 	}

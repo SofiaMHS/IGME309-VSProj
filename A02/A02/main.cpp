@@ -46,11 +46,13 @@ void display(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    //if the object has 1 vertex, it is a line
     if (myObj->getVertNum() == 1) {
         glBegin(GL_LINES);
         myObj->draw();
         glEnd();
     }
+    //if the object has more than 2 vertices, it is a polygon
     else if (myObj->getVertNum() >= 2) {
         glBegin(GL_POLYGON);
         myObj->draw();
@@ -61,17 +63,20 @@ void display(void)
 
         PolyObject* obj = completePolygons[i]; 
 
+        //if the object only has one vertex, it is a point
         if (obj->getVertNum() == 1) {
             glBegin(GL_POINTS);
             obj->draw();
             glEnd();
         }
+        //if the object has two vertices, it is a line
         else if (obj->getVertNum() == 2) {
             glBegin(GL_LINES);
             obj->draw();
             glEnd();
 
         }
+        //if the object has more that 3 vertices, it is a polygon
         else if (obj->getVertNum() >= 3) {
             glBegin(GL_POLYGON);
             obj->draw();
@@ -102,9 +107,11 @@ void reshape(int w, int h)
 
 void mouse(int button, int state, int x, int y)
 {
+    //when the left mouse button is pressed
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
         mousePos[0] = (float)x / rasterSize[0] * canvasSize[0];
         mousePos[1] = (float)(rasterSize[1] - y) / rasterSize[1] * canvasSize[1];
+        //when adding a vertex, the current mouse positions are passed in as the x,y
         myObj->addVertex(mousePos[0], mousePos[1]); 
      
     }
@@ -116,7 +123,7 @@ void motion(int x, int y)
     // Note: the raster window created by GLUT assumes bottom-left is the origin.
     mousePos[0] = (float)x / rasterSize[0] * canvasSize[0];
     mousePos[1] = (float)(rasterSize[1] - y) / rasterSize[1] * canvasSize[1];
-
+    //the current object's internal mouse positions are updated
     myObj->updateMousePos(mousePos[0], mousePos[1]); 
 
     glutPostRedisplay();
@@ -125,12 +132,19 @@ void motion(int x, int y)
 void keyboard(unsigned char key, int x, int y)
 {
     switch (key) {
+     
+    //when the player presses the escape key
     case 27:
+        //the game exits
         exit(0);
         break;
 
+    //when the player presses the enter key
     case 13:
-        completePolygons.push_back(myObj); 
+        //the current object is added to the completed objects vector
+        PolyObject* tempObj = myObj; 
+        completePolygons.push_back(tempObj); 
+        //current object pointer is set to a new object address
         myObj = new PolyObject(); 
         break; 
     }
@@ -141,15 +155,15 @@ void menu(int value)
 {
     switch (value) {
     case 0: // clear
-        //somehow clear vertices
-        myObj = new PolyObject(); 
+        //creates a new object 
+        completePolygons.push_back(myObj);
         completePolygons.clear(); 
+        myObj = new PolyObject();
         glutPostRedisplay();
         break;
     case 1: //exit
         exit(0);
     case 2: // red
-        //
         myObj->setColor(1.0f, 0.0f, 0.0f); 
         glutPostRedisplay();
         break;
@@ -161,21 +175,32 @@ void menu(int value)
         myObj->setColor(0.0f, 0.0f, 1.0f);
         glutPostRedisplay();
         break;
+    case 5: // black
+        myObj->setColor(0.0f, 0.0f, 0.0f);
+        glutPostRedisplay();
+        break;
     default:
         break;
     }
 }
 void createMenu()
 {
+    //menu is created
+
+    //color menu created as a separate menu for later use
     int colorMenu = glutCreateMenu(menu);
     glutAddMenuEntry("Red", 2);
     glutAddMenuEntry("Green", 3);
     glutAddMenuEntry("Blue", 4);
+    glutAddMenuEntry("Black", 5);
 
+    //menu created with options tied to switch in menu function
     glutCreateMenu(menu);
     glutAddMenuEntry("Clear", 0);
     glutAddSubMenu("Colors", colorMenu);
     glutAddMenuEntry("Exit", 1);
+
+    //menu is attached to the right mouse button as a trigger
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
