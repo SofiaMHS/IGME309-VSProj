@@ -12,18 +12,15 @@ using namespace std;
 class PolyObject
 {
 private:
-    float* vertices; // all vertices in C++ vector
+    float* vertices; // all vertices in the polygon
     float* color;    // color of this polygon
-    int vertNum; 
-    float mousePos[2];
+    int vertNum;     // number of vertices in the polygon
 public:
-    PolyObject();
-    ~PolyObject();
-    void addVertex(float x, float y);            // add vertex at the end of the vertex list
-    void setColor(float cr, float cg, float cb); // set the color of this polygon
-    unsigned int getVertNum();                   // return the number of vertices
-    void draw();                                 // draw the polygon if it’s completed
-    void updateMousePos(float x, float y); 
-    void clearVertices(); //clean up
-    //need a function to delete vertices - set vertices to nullptr?
+    PolyObject();                                // object constructor
+    ~PolyObject();                               // object destructor
+    void addVertex(float x, float y);            // add a vertex to the end of vertices array pointer
+    void setColor(float cr, float cg, float cb); // set the rgb color of the current shape
+    unsigned int getVertNum();                   // returns the number of vertices
+    void draw();                                 // draws the current polygon
+
 };

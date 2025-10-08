@@ -7,10 +7,6 @@ using namespace std;
 float canvasSize[] = { 10.0f, 10.0f };
 int rasterSize[] = { 800, 600 };
 
-// structure for storing 3 2D vertices of a triangle
-int numOfVertices = 0;
-float v[2 * 3];
-float color[3];
 
 float mousePos[2];
 
@@ -20,15 +16,13 @@ vector<PolyObject*> completePolygons;
 
 void init(void)
 {
-    for (int i = 0; i < 6; i++)
-        v[i] = 0.0f;
+    //initializing variables
     mousePos[0] = mousePos[1] = 0.0f;
-    color[0] = 1.0f;
-    color[1] = color[2] = 0.0f;
 }
 
 void drawCursor()
 {
+    //draws a cursor that follows the user's mouse
     glColor3f(1.0f, 0.0f, 1.0f);
     glPointSize(10.0f);
     glBegin(GL_POINTS);
@@ -39,10 +33,10 @@ void drawCursor()
 
 void display(void)
 {
+    //setup for drawing polygons
     glClearColor(1.0, 1.0, 1.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    //glColor3fv(color);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
@@ -50,15 +44,22 @@ void display(void)
     if (myObj->getVertNum() == 1) {
         glBegin(GL_LINES);
         myObj->draw();
+        glVertex2fv(mousePos);
         glEnd();
+        glutPostRedisplay();
+
     }
     //if the object has more than 2 vertices, it is a polygon
     else if (myObj->getVertNum() >= 2) {
         glBegin(GL_POLYGON);
         myObj->draw();
+        glVertex2fv(mousePos);
         glEnd();
+        glutPostRedisplay();
+
     }
 
+    //for loop to draw each complete polygon
     for (int i = 0; i < completePolygons.size(); i++) {
 
         PolyObject* obj = completePolygons[i]; 
@@ -68,6 +69,7 @@ void display(void)
             glBegin(GL_POINTS);
             obj->draw();
             glEnd();
+
         }
         //if the object has two vertices, it is a line
         else if (obj->getVertNum() == 2) {
@@ -81,12 +83,11 @@ void display(void)
             glBegin(GL_POLYGON);
             obj->draw();
             glEnd();
-
         }
+
         glutPostRedisplay();
 
     }
-
     drawCursor();
     glutSwapBuffers();
 
@@ -97,6 +98,7 @@ void reshape(int w, int h)
     rasterSize[0] = w;
     rasterSize[1] = h;
 
+    //using projection to resize canvas
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(0.0, canvasSize[0], 0.0, canvasSize[1]);
@@ -113,7 +115,8 @@ void mouse(int button, int state, int x, int y)
         mousePos[1] = (float)(rasterSize[1] - y) / rasterSize[1] * canvasSize[1];
         //when adding a vertex, the current mouse positions are passed in as the x,y
         myObj->addVertex(mousePos[0], mousePos[1]); 
-     
+        glutPostRedisplay();
+
     }
 }
 
@@ -124,7 +127,6 @@ void motion(int x, int y)
     mousePos[0] = (float)x / rasterSize[0] * canvasSize[0];
     mousePos[1] = (float)(rasterSize[1] - y) / rasterSize[1] * canvasSize[1];
     //the current object's internal mouse positions are updated
-    myObj->updateMousePos(mousePos[0], mousePos[1]); 
 
     glutPostRedisplay();
 }
@@ -155,8 +157,21 @@ void menu(int value)
 {
     switch (value) {
     case 0: // clear
-        //creates a new object 
-        completePolygons.push_back(myObj);
+        //pushes the current pointer into the list of complete polygons
+        //vv Unable to implement vv
+        /*
+    
+        //vector will clear all polygons, calling their destructors
+        for (PolyObject* obj : completePolygons) {
+            completePolygons.erase(find(completePolygons.begin(), completePolygons.end(), obj));
+         
+            delete obj;
+            obj = nullptr;
+         
+        }
+        delete myObj;
+        myObj = nullptr;
+         */
         completePolygons.clear(); 
         myObj = new PolyObject();
         glutPostRedisplay();
