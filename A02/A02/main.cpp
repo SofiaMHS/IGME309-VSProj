@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include "PolygonObject.h"
+#include <vector>
 using namespace std;
 
 float canvasSize[] = { 10.0f, 10.0f };
@@ -14,7 +15,8 @@ float color[3];
 float mousePos[2];
 
 
-PolyObject myObj = PolyObject();
+PolyObject* myObj = new PolyObject();
+vector<PolyObject*> completePolygons; 
 
 void init(void)
 {
@@ -44,24 +46,41 @@ void display(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    /*
-    if (numOfVertices > 0 && numOfVertices < 3) {
-
-        glBegin(GL_LINE_STRIP);
-        for (int i = 0; i < numOfVertices; i++)
-            glVertex2fv(v + i * 2);
-        glVertex2fv(mousePos);
+    if (myObj->getVertNum() == 1) {
+        glBegin(GL_LINES);
+        myObj->draw();
         glEnd();
     }
-    else if (numOfVertices == 3) {
-        glBegin(GL_TRIANGLES);
-        for (int i = 0; i < numOfVertices; i++)
-            glVertex2fv(v + i * 2);
+    else if (myObj->getVertNum() >= 2) {
+        glBegin(GL_POLYGON);
+        myObj->draw();
         glEnd();
     }
-    */
 
-    myObj.draw();
+    for (int i = 0; i < completePolygons.size(); i++) {
+
+        PolyObject* obj = completePolygons[i]; 
+
+        if (obj->getVertNum() == 1) {
+            glBegin(GL_POINTS);
+            obj->draw();
+            glEnd();
+        }
+        else if (obj->getVertNum() == 2) {
+            glBegin(GL_LINES);
+            obj->draw();
+            glEnd();
+
+        }
+        else if (obj->getVertNum() >= 3) {
+            glBegin(GL_POLYGON);
+            obj->draw();
+            glEnd();
+
+        }
+        glutPostRedisplay();
+
+    }
 
     drawCursor();
     glutSwapBuffers();
@@ -84,25 +103,9 @@ void reshape(int w, int h)
 void mouse(int button, int state, int x, int y)
 {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-        //comment out when ready to test polygon
-
-        
-        /*
-        if (numOfVertices >= 3)
-            numOfVertices = 0;
-
         mousePos[0] = (float)x / rasterSize[0] * canvasSize[0];
         mousePos[1] = (float)(rasterSize[1] - y) / rasterSize[1] * canvasSize[1];
-        v[numOfVertices * 2 + 0] = mousePos[0];
-        v[numOfVertices * 2 + 1] = mousePos[1];
-
-        numOfVertices++;
-        glutPostRedisplay();
-        */
-        
-        mousePos[0] = (float)x / rasterSize[0] * canvasSize[0];
-        mousePos[1] = (float)(rasterSize[1] - y) / rasterSize[1] * canvasSize[1];
-        myObj.addVertex(mousePos[0], mousePos[1]); 
+        myObj->addVertex(mousePos[0], mousePos[1]); 
      
     }
 }
@@ -114,7 +117,7 @@ void motion(int x, int y)
     mousePos[0] = (float)x / rasterSize[0] * canvasSize[0];
     mousePos[1] = (float)(rasterSize[1] - y) / rasterSize[1] * canvasSize[1];
 
-    myObj.updateMousePos(mousePos[0], mousePos[1]); 
+    myObj->updateMousePos(mousePos[0], mousePos[1]); 
 
     glutPostRedisplay();
 }
@@ -125,7 +128,13 @@ void keyboard(unsigned char key, int x, int y)
     case 27:
         exit(0);
         break;
+
+    case 13:
+        completePolygons.push_back(myObj); 
+        myObj = new PolyObject(); 
+        break; 
     }
+
 }
 
 void menu(int value)
@@ -133,27 +142,23 @@ void menu(int value)
     switch (value) {
     case 0: // clear
         //somehow clear vertices
+        myObj = new PolyObject(); 
+        completePolygons.clear(); 
         glutPostRedisplay();
         break;
     case 1: //exit
         exit(0);
     case 2: // red
         //
-        color[0] = 1.0f;
-        color[1] = 0.0f;
-        color[2] = 0.0f;
+        myObj->setColor(1.0f, 0.0f, 0.0f); 
         glutPostRedisplay();
         break;
     case 3: // green
-        color[0] = 0.0f;
-        color[1] = 1.0f;
-        color[2] = 0.0f;
+        myObj->setColor(0.0f, 1.0f, 0.0f);
         glutPostRedisplay();
         break;
     case 4: // blue
-        color[0] = 0.0f;
-        color[1] = 0.0f;
-        color[2] = 1.0f;
+        myObj->setColor(0.0f, 0.0f, 1.0f);
         glutPostRedisplay();
         break;
     default:
