@@ -21,6 +21,9 @@ ParticleSystem::ParticleSystem(int _numParticles)
 		// Write your code below
 		// Please add initializations for other arrays as you see appropriate.
 		//look at particles system fields
+		//set colors base
+		//set positions base
+		//set velocities base
 		/***************************/
 	}
 }
@@ -36,8 +39,10 @@ void ParticleSystem::update(float deltaTime)
 		for (int i = 0; i < numParticles; i++) {
 			// Initialize the life times
 			//if lifeTimes[i] > 5, set to 0 
-			if (lifeTimes[i] > 5) {
+			if (lifeTimes[i] > maxLifeTime) {
 				lifeTimes[i] = 0; 
+				positions[i*3] = 0; 
+				colors[i*4] = 0; 
 			}
 			else {
 				lifeTimes[i] += 1;
