@@ -20,7 +20,6 @@ int g_winHeight = 512;
 Camera g_cam;
 Text g_text;
 unsigned char g_keyStates[256];
-//hello
 /**************************************************/
 
 // Particle system object
