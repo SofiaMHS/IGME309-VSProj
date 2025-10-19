@@ -51,24 +51,29 @@ void ParticleSystem::update(float deltaTime)
 			// Initialize the life times
 			//if lifeTimes[i] > 5, set to 0 
 			if (lifeTimes[i] <= 0) {
-				lifeTimes[i] = 0; 
-				positions[i*3] = 0; 
-				colors[3] = 1; 
-				velocities[i * 3] = 0; 
+				lifeTimes[i] = maxLifeTime - maxLifeTime * i / numParticles;
+				positions[i * 3] = 0.0f;
+				positions[i * 3 + 1] = 0.0f;
+				positions[i * 3 + 2] = 0.0f;
+				colors[i * 4 + 3] = 1.0f;				
+				velocities[i * 3] = getRandomValue(minSpeedX, maxSpeedX);
+				velocities[i * 3 + 1] = getRandomValue(minSpeedY, maxSpeedY);
+				velocities[i * 3 + 2] = getRandomValue(minSpeedZ, maxSpeedZ);
 			}
 			else {
 				lifeTimes[i] -= deltaTime;
-				velocities[i * 3] += acceleration[1] * deltaTime;
-				velocities[i * 3 + 1] += acceleration[1] * deltaTime;
-				velocities[i * 3 + 2] += acceleration[1] * deltaTime;
-				positions[i * 3] += velocities[i*3]*deltaTime;
+				velocities[i * 3] +=  (acceleration[0] * deltaTime);
+				velocities[i * 3 + 1] +=  (acceleration[1] * deltaTime);
+				velocities[i * 3 + 2] +=  (acceleration[2] * deltaTime);
+				positions[i * 3] += velocities[i*3]*deltaTime ;
 				positions[i * 3 + 1] += velocities[i * 3 + 1] * deltaTime;
 				positions[i * 3 + 2] += velocities[i * 3 + 2] * deltaTime;
 				colors[i * 4 + 3] -= 0.1; 
 			}
 		}
 
-		//+ (0.5 * -9.8f * pow(deltaTime, 2))
+		//+ (0.5 * acceleration[0] * pow(deltaTime, 2))
+		// += acceleration[1] * deltaTime
 		// Write your code above
 		/***************************/
 	}
