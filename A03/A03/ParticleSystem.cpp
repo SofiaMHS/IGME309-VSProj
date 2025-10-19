@@ -4,6 +4,32 @@
 #include <iostream>
 #include <sstream>
 
+void ParticleSystem::updateGPU()
+{
+
+
+	/*
+	glGenBuffers(1, &vboPoints);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboPoints);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numParticles * 3, positions, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glGenBuffers(1, &vboColors);
+	glBindBuffer(GL_ARRAY_BUFFER, vboColors);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numParticles * 4, colors, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, NULL);
+
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	*/
+}
+
 ParticleSystem::ParticleSystem(int _numParticles)
 {
 	numParticles = _numParticles;	// Set the number of particles
@@ -42,10 +68,10 @@ ParticleSystem::ParticleSystem(int _numParticles)
 
 ParticleSystem::~ParticleSystem()
 {
-	/*
+	glDeleteVertexArrays(1, &vao);
 	glDeleteBuffers(1, &vboPoints); 
 	glDeleteBuffers(1, &vboColors);
-	*/
+	
 }
 
 void ParticleSystem::update(float deltaTime)
@@ -88,20 +114,7 @@ void ParticleSystem::update(float deltaTime)
 	}
 }
 
-void ParticleSystem::updateGPU()
-{
-	/*
-	glGenBuffers(1, &vboPoints);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboPoints); 
-	glBufferData(GL_ARRAY_BUFFER,sizeof(float) * numParticles * 3, positions, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0); 
 
-	glGenBuffers(1, &vboColors);
-	glBindBuffer(GL_ARRAY_BUFFER, vboColors);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numParticles * 4, colors, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	*/
-}
 
 void ParticleSystem::draw()
 {
@@ -113,6 +126,7 @@ void ParticleSystem::draw()
 	//for each, draw particle at position
 	//with color
 	
+
 	for (int i = 0; i < numParticles; i++) {
 
 		GLfloat* thisColors = new float[4] {colors[i * 4], colors[i * 4 + 1], colors[i * 4 + 2], colors[i * 4 + 3]};
@@ -124,6 +138,9 @@ void ParticleSystem::draw()
 		glutPostRedisplay();
 	}
 
+	glBindVertexArray(vao);
+	glDrawArrays(GL_POINTS, 0, numParticles); 
+	glBindVertexArray(vao); 
 
 	/*
 	glEnableClientState(GL_VERTEX_ARRAY);

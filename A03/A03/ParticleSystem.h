@@ -1,5 +1,9 @@
 #pragma once
-
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/freeglut.h>
+#endif
 using namespace std;
 
 class ParticleSystem
@@ -26,14 +30,15 @@ private:
 	float minSpeedZ = -5.0f;
 	float maxSpeedZ = 5.0f;
 
-	GLuint vboPoints = 0;
-	GLuint vboColors = 0; 
+	unsigned int vboPoints = 0;
+	unsigned int vboColors = 0;
+	unsigned int vao = 0;
+	void updateGPU();
 
 public:
 	ParticleSystem(int _numParticles);	
 	~ParticleSystem(); 
 	void update(float deltaTime);
-	void updateGPU();
 	void draw();
 	int getNumParticles() {
 		return numParticles;
