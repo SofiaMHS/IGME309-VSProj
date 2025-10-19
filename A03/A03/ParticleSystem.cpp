@@ -68,7 +68,7 @@ void ParticleSystem::update(float deltaTime)
 				positions[i * 3] += velocities[i*3]*deltaTime ;
 				positions[i * 3 + 1] += velocities[i * 3 + 1] * deltaTime;
 				positions[i * 3 + 2] += velocities[i * 3 + 2] * deltaTime;
-				colors[i * 4 + 3] -= 0.1; 
+				colors[i * 4 + 3] -= 0.1f; 
 			}
 		}
 
@@ -84,18 +84,21 @@ void ParticleSystem::draw()
 	/***************************/
 	// Write your code below
 	// Use GL_POINTS for rendering
-	glPointSize(10.0f); 
-	glBegin(GL_POINTS);
-
+	glPointSize(3.0f); 
 	//for loop with numParticles
 	//for each, draw particle at position
 	//with color
 	for (int i = 0; i < numParticles; i++) {
-		glVertex3fv(positions + i * 3); 
-	}
-	glEnd(); 
 
-	glutPostRedisplay(); 
+		GLfloat* thisColors = new float[4] {colors[i * 4], colors[i * 4 + 1], colors[i * 4 + 2], colors[i * 4 + 3]};
+
+		glColor4fv(thisColors);
+		glBegin(GL_POINTS); 
+		glVertex3fv(positions + i * 3); 
+		glEnd();
+		glutPostRedisplay();
+	}
+
 	
 	// Write your code above
 	/***************************/
