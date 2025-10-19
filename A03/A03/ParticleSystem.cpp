@@ -37,6 +37,15 @@ ParticleSystem::ParticleSystem(int _numParticles)
 		//set velocities base
 		/***************************/
 	}
+	updateGPU(); 
+}
+
+ParticleSystem::~ParticleSystem()
+{
+	/*
+	glDeleteBuffers(1, &vboPoints); 
+	glDeleteBuffers(1, &vboColors);
+	*/
 }
 
 void ParticleSystem::update(float deltaTime)
@@ -79,6 +88,21 @@ void ParticleSystem::update(float deltaTime)
 	}
 }
 
+void ParticleSystem::updateGPU()
+{
+	/*
+	glGenBuffers(1, &vboPoints);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboPoints); 
+	glBufferData(GL_ARRAY_BUFFER,sizeof(float) * numParticles * 3, positions, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0); 
+
+	glGenBuffers(1, &vboColors);
+	glBindBuffer(GL_ARRAY_BUFFER, vboColors);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numParticles * 4, colors, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	*/
+}
+
 void ParticleSystem::draw()
 {
 	/***************************/
@@ -88,6 +112,7 @@ void ParticleSystem::draw()
 	//for loop with numParticles
 	//for each, draw particle at position
 	//with color
+	
 	for (int i = 0; i < numParticles; i++) {
 
 		GLfloat* thisColors = new float[4] {colors[i * 4], colors[i * 4 + 1], colors[i * 4 + 2], colors[i * 4 + 3]};
@@ -99,7 +124,28 @@ void ParticleSystem::draw()
 		glutPostRedisplay();
 	}
 
-	
+
+	/*
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+
+
+	// Draw shape with buffer data
+
+	//vertex is drawn using the vboVerts data, which contains the data from vertices
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboPoints);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	//colors are chosen based on the vboColors data, which contains data from vertColors
+	glBindBuffer(GL_ARRAY_BUFFER, vboColors);
+	glColorPointer(4, GL_FLOAT, 0, NULL);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	*/
 	// Write your code above
 	/***************************/
 }

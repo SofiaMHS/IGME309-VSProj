@@ -26,9 +26,14 @@ private:
 	float minSpeedZ = -5.0f;
 	float maxSpeedZ = 5.0f;
 
+	GLuint vboPoints = 0;
+	GLuint vboColors = 0; 
+
 public:
 	ParticleSystem(int _numParticles);	
+	~ParticleSystem(); 
 	void update(float deltaTime);
+	void updateGPU();
 	void draw();
 	int getNumParticles() {
 		return numParticles;
