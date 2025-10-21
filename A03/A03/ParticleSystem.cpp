@@ -6,9 +6,6 @@
 
 void ParticleSystem::updateGPU()
 {
-
-
-	/*
 	glGenBuffers(1, &vboPoints);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboPoints);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numParticles * 3, positions, GL_STATIC_DRAW);
@@ -22,12 +19,12 @@ void ParticleSystem::updateGPU()
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, NULL);
+	glVertexAttribPointer(0, numParticles * 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	glVertexAttribPointer(1, numParticles * 4, GL_FLOAT, GL_FALSE, 0, NULL);
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
-	*/
+	
 }
 
 ParticleSystem::ParticleSystem(int _numParticles)
@@ -63,7 +60,6 @@ ParticleSystem::ParticleSystem(int _numParticles)
 		//set velocities base
 		/***************************/
 	}
-	updateGPU(); 
 }
 
 ParticleSystem::~ParticleSystem()
@@ -76,7 +72,7 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::update(float deltaTime)
 {
-	for (int i = 0; i < numParticles; i++) {
+	
 		/***************************/
 		// Write your code below
 		// Update lifetime, velocity, position, and color.
@@ -103,7 +99,7 @@ void ParticleSystem::update(float deltaTime)
 				positions[i * 3] += velocities[i*3]*deltaTime ;
 				positions[i * 3 + 1] += velocities[i * 3 + 1] * deltaTime;
 				positions[i * 3 + 2] += velocities[i * 3 + 2] * deltaTime;
-				colors[i * 4 + 3] -= 0.1f; 
+				colors[i * 4 + 3] = lifeTimes[i] / maxLifeTime;
 			}
 		}
 
@@ -111,7 +107,8 @@ void ParticleSystem::update(float deltaTime)
 		// += acceleration[1] * deltaTime
 		// Write your code above
 		/***************************/
-	}
+	
+	//updateGPU();
 }
 
 
@@ -125,27 +122,24 @@ void ParticleSystem::draw()
 	//for loop with numParticles
 	//for each, draw particle at position
 	//with color
-	
-
+	glBegin(GL_POINTS);
 	for (int i = 0; i < numParticles; i++) {
 
-		GLfloat* thisColors = new float[4] {colors[i * 4], colors[i * 4 + 1], colors[i * 4 + 2], colors[i * 4 + 3]};
-
-		glColor4fv(thisColors);
-		glBegin(GL_POINTS); 
+		glColor4f(colors[i * 4], colors[i * 4 + 1], colors[i * 4 + 2], colors[i * 4 + 3]);
+	
 		glVertex3fv(positions + i * 3); 
-		glEnd();
+
 		glutPostRedisplay();
 	}
+	glEnd(); 
 
-	glBindVertexArray(vao);
-	glDrawArrays(GL_POINTS, 0, numParticles); 
-	glBindVertexArray(vao); 
+  //glBindVertexArray(vao);
+  //glDrawArrays(GL_POINTS, 0, numParticles); 
+  //glBindVertexArray(vao); 
 
 	/*
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
-
 
 	// Draw shape with buffer data
 
@@ -159,10 +153,14 @@ void ParticleSystem::draw()
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	glBindVertexArray(vao);
+    glDrawArrays(GL_POINTS, 0, numParticles); 
+    glBindVertexArray(vao); 
+
 
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
-	*/
+	
 	// Write your code above
 	/***************************/
 }

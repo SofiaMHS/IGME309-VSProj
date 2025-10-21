@@ -1,12 +1,6 @@
 ﻿#include <GL/glew.h>
 #include <GL/wglew.h>
 
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <GL/freeglut.h>
-#endif
-
 #include "Camera.h"
 #include "Text.h"
 #include "ParticleSystem.h"
