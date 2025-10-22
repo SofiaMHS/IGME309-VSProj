@@ -26,11 +26,11 @@ ParticleSystem::ParticleSystem(int _numParticles)
 		velocities[i* 3 + 1] = getRandomValue(minSpeedY, maxSpeedY);
 		velocities[i *3 + 2] = getRandomValue(minSpeedZ, maxSpeedZ);
 
-		//initialize the colors of each particle to be blue with full
+		//initialize the colors of each particle to be lavender with full
 		//opacity 
-		colors[i * 4] = 0.0f;
-		colors[i * 4 +1] = 0.0f;
-		colors[i * 4 +2] = 1.0f;
+		colors[i * 4] = 0.7f;
+		colors[i * 4 +1] = 0.3f;
+		colors[i * 4 +2] = 0.8f;
 		colors[i * 4 +3] = 1.0f;
 		//each particle starts at (0,0,0)
 		positions[i * 3] = 0.0f; 
