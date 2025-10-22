@@ -30,14 +30,10 @@ private:
 	float minSpeedZ = -5.0f;
 	float maxSpeedZ = 5.0f;
 
-	unsigned int vboPoints = 0;
-	unsigned int vboColors = 0;
-	unsigned int vao = 0;
-	void updateGPU();
+
 
 public:
 	ParticleSystem(int _numParticles);	
-	~ParticleSystem(); 
 	void update(float deltaTime);
 	void draw();
 	int getNumParticles() {
