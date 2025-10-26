@@ -10,9 +10,10 @@ int rasterSize[] = { 800, 600 };
 
 float mousePos[2];
 
-
-PolyObject* myObj = new PolyObject();
-vector<PolyObject*> completePolygons; 
+shared_ptr<PolyObject> myObj(new PolyObject); 
+//PolyObject* myObj = new PolyObject();
+vector<shared_ptr<PolyObject>> completePolygons;
+//vector<PolyObject*> completePolygons; 
 
 void init(void)
 {
@@ -61,27 +62,25 @@ void display(void)
 
     //for loop to draw each complete polygon
     for (int i = 0; i < completePolygons.size(); i++) {
-
-        PolyObject* obj = completePolygons[i]; 
-
+  
         //if the object only has one vertex, it is a point
-        if (obj->getVertNum() == 1) {
+        if (completePolygons[i]->getVertNum() == 1) {
             glBegin(GL_POINTS);
-            obj->draw();
+            completePolygons[i]->draw();
             glEnd();
 
         }
         //if the object has two vertices, it is a line
-        else if (obj->getVertNum() == 2) {
+        else if (completePolygons[i]->getVertNum() == 2) {
             glBegin(GL_LINES);
-            obj->draw();
+            completePolygons[i]->draw();
             glEnd();
 
         }
         //if the object has more that 3 vertices, it is a polygon
-        else if (obj->getVertNum() >= 3) {
+        else if (completePolygons[i]->getVertNum() >= 3) {
             glBegin(GL_POLYGON);
-            obj->draw();
+            completePolygons[i]->draw();
             glEnd();
         }
 
@@ -144,10 +143,10 @@ void keyboard(unsigned char key, int x, int y)
     //when the player presses the enter key
     case 13:
         //the current object is added to the completed objects vector
-        PolyObject* tempObj = myObj; 
+        shared_ptr<PolyObject> tempObj = myObj; 
         completePolygons.push_back(tempObj); 
         //current object pointer is set to a new object address
-        myObj = new PolyObject(); 
+        myObj.reset(new PolyObject());
         break; 
     }
 
@@ -172,8 +171,10 @@ void menu(int value)
         delete myObj;
         myObj = nullptr;
          */
+
         completePolygons.clear(); 
-        myObj = new PolyObject();
+        //myObj.release();
+        myObj.reset(new PolyObject());
         glutPostRedisplay();
         break;
     case 1: //exit
