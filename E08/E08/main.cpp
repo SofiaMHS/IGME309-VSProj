@@ -25,9 +25,9 @@ float circRadius = 1.0f;
 //initializations for necessary coordinates
 float anchorX = canvasSize[0] / 2;
 float anchorY = canvasSize[1] / 2 + canvasSize[1] / 4;
-float radius = canvasSize[0] / 4;
-float penX = -canvasSize[0] / 4;
-float penY = -canvasSize[0] / 4;
+float radius = canvasSize[0] / 2;
+float penX = -canvasSize[0] / 2;
+float penY = -canvasSize[1] / 2;
 
 //function to draw a circle based on input x,y coords
 void drawCircle(float x, float y) {
@@ -58,7 +58,7 @@ void display(void)
 	/*****************************/
 
 	//Draw anchor point
-	glColor3f(1.0f, 0.0f, 0.0f);
+	glColor3f(0.0f, 0.0f, 0.0f);
 	glPointSize(8.0f);
 	glBegin(GL_POINTS);
 	glVertex2f(anchorX, anchorY);
@@ -75,6 +75,18 @@ void display(void)
 	//translates the world along the x-axis the appropriate distance from the anchor point
 	glTranslatef(radius, 0.0f, 0.0f);
 
+
+
+	// Draw rotating ball
+	//sets the color for the ball
+	glColor3f(0.7, 0.3f, 0.8f);
+	//calls the draw circle function with the pendulum x and y coords.
+	drawCircle(penX, penY);
+
+	//sets color for the string
+	glColor3f(0.0f, 0.0f, 0.0f);
+	//sets line width of the string
+	glLineWidth(2.0f);
 	//drawing for the line begins
 	glBegin(GL_LINES);
 	//line origin rests at the pendulum x coord. and 0 for the y coord
@@ -83,15 +95,10 @@ void display(void)
 	glVertex2f(penX, penY);
 	glEnd();
 
-	// Draw rotating ball
-	//sets the color for the ball
-	glColor3f(0.0f, 0.0f, 1.0f);
-	//calls the draw circle function with the pendulum x and y coords.
-	drawCircle(penX, penY);
-
 	//curent matrix is popped so it can later be updated according to the rotation angle
 	glPopMatrix();
 
+	glutPostRedisplay(); 
 
 	// write your code above
 	/*****************************/
