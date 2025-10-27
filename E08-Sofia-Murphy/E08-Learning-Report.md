@@ -1,0 +1,8 @@
+IGME 309  
+Sofia Murphy  
+Exercise 08  
+10/27/2025
+
+	  
+	For this exercise, the main issue I struggled with was how to animate the line connecting the anchor point and the circle. While I was able to make the line’s endpoint the center point of the circle fairly easily, I struggled to find the right coordinates for the line’s origin. I attempted to do a few different combinations, however they all ended up not correctly orienting to the anchor point. Finally, I realized that I would need to orient the line at the same x value as the endpoint, but that I would need the y value to be 0\. This is due to the fact that the anchor’s coordinates had become the local origin, and by setting the line’s starting  y point 0, it would be located at the origin.  
+	The remainder of my process was simply implementing a method to draw a circle, then calling that method in the display function, using my desired pendulum coordinates. I also needed to complete the transformations and rotations in order to correctly animate the pendulum. This involved pushing the current matrix to the stack, as this would be the matrix used in adjusting the local origin. I then set the anchor’s coordinates to the local origin with a translation, after which I applied the current value of the rotationAngle. Finally, I translated the world matrix along the x-axis by the radius to set the pendulum to correct the distance from the anchor point. Finally, once the program had finished drawing the pendulum, the current matrix would be popped from the stack, in order to replace it with the next transformation matrix. 
