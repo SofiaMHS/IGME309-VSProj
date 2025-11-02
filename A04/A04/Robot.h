@@ -13,6 +13,7 @@ class Robot
 		const int MAX_NUM_LIMBS = 16;  
 		int currentIndex; 
 		float* rotations; 
+		float* translations; 
 
     public:
 		Robot(); 
@@ -21,5 +22,7 @@ class Robot
 		void drawTorso(); 
 		void drawHead(); 
 		void draw(); 
+		void rotate(); 
+		void keyboard(unsigned char key, int x, int y);
 };
 

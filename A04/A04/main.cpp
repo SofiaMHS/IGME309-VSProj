@@ -10,6 +10,8 @@
 
 #include <iostream>
 #include <math.h>
+#include "Robot.h"
+
 using namespace std;
 
 #define MAX_NUM_CIRCLE 7
@@ -27,6 +29,8 @@ float rotations[MAX_NUM_CIRCLE];
 
 float curMouse[2];
 float preMouse[2];
+
+Robot myRobot = Robot(); 
 
 void init(void)
 {
@@ -67,7 +71,9 @@ void display(void)
 
     // the following codes could be written in a for loop.
     // Here I expand them so that you can better trace the changes of cirlce's coordinate system.
-
+   
+    myRobot.drawTorso(); 
+    /*
     int cid = -1; // the index of current circle
     // circle 0
     cid = 0;
@@ -107,7 +113,7 @@ void display(void)
     glTranslatef(translations[cid * 2 + 0], translations[cid * 2 + 1], 0.0f);
     glRotatef(rotations[cid], 0.0f, 0.0f, 1.0f);
     drawCircle(CIRCLE_RADIUM * (MAX_NUM_CIRCLE - cid) / MAX_NUM_CIRCLE, colors + cid * 3);
-
+    */
 
     glutSwapBuffers();
 }

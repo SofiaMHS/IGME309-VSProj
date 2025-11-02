@@ -56,7 +56,6 @@ void display(void)
 
 
 	/*****************************/
-
 	//Draw anchor point
 	glColor3f(0.0f, 0.0f, 0.0f);
 	glPointSize(8.0f);
@@ -99,8 +98,6 @@ void display(void)
 	glPopMatrix();
 
 	glutPostRedisplay(); 
-
-	// write your code above
 	/*****************************/
 
 	glutSwapBuffers();
