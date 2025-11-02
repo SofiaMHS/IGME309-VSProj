@@ -72,7 +72,8 @@ void display(void)
     // the following codes could be written in a for loop.
     // Here I expand them so that you can better trace the changes of cirlce's coordinate system.
    
-    myRobot.drawTorso(); 
+    //myRobot.rotate(); 
+    myRobot.draw(); 
     /*
     int cid = -1; // the index of current circle
     // circle 0
@@ -151,7 +152,7 @@ void keyboard(unsigned char key, int x, int y)
 
 void keyboardUp(unsigned char key, int x, int y)
 {
-    unsigned char asciiOffset = 49; // see an ascii table
+   /* unsigned char asciiOffset = 49; // see an ascii table
     for (unsigned char i = '1'; i < '7'; i++) {
         if (key == i) {
             keyStates[i] = false;
@@ -159,7 +160,9 @@ void keyboardUp(unsigned char key, int x, int y)
             colors[(i - asciiOffset) * 3 + 1] = 0.0f;
             colors[(i - asciiOffset) * 3 + 2] = 0.0f;
         }
-    }
+    }*/ 
+
+    
     glutPostRedisplay();
 }
 
