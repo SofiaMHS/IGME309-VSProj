@@ -14,6 +14,7 @@ class Robot
 		int currentIndex; 
 		float* rotations; 
 		float* translations; 
+		float* colors; 
 
     public:
 		Robot(); 
@@ -22,7 +23,8 @@ class Robot
 		void drawTorso(); 
 		void drawHead(); 
 		void draw(); 
-		void rotate(); 
+		void rotate(float rotateAngle);
 		void keyboard(unsigned char key, int x, int y);
+		float getRandFloat(float min, float max);
 };
 

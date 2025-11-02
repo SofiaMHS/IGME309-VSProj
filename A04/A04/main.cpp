@@ -137,7 +137,7 @@ void keyboard(unsigned char key, int x, int y)
 {
     if (key == 27) // 'esc' key
         exit(0);
-
+    /*
     unsigned char asciiOffset = 49; // see an ascii table
     for (unsigned char i = '1'; i < '7'; i++) {
         if (key == i) {
@@ -146,7 +146,8 @@ void keyboard(unsigned char key, int x, int y)
             colors[(i - asciiOffset) * 3 + 1] = 0.0f;
             colors[(i - asciiOffset) * 3 + 2] = 0.0f;
         }
-    }
+    }*/
+    myRobot.keyboard(key, x, y); 
     glutPostRedisplay();
 }
 
@@ -160,7 +161,7 @@ void keyboardUp(unsigned char key, int x, int y)
             colors[(i - asciiOffset) * 3 + 1] = 0.0f;
             colors[(i - asciiOffset) * 3 + 2] = 0.0f;
         }
-    }*/ 
+    }*/
 
     
     glutPostRedisplay();
