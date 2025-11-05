@@ -15,6 +15,8 @@ class Robot
 		float* rotations; 
 		float* translations; 
 		float* colors; 
+		float* vertices; 
+		float* prevColor;
 
     public:
 		Robot(); 
