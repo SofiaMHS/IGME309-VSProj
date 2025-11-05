@@ -9,7 +9,7 @@ Robot::Robot()
 	currentIndex = 0; 
 	colors = new float[3 * MAX_NUM_LIMBS] {0.0f};
 
-	prevColor = new float[3]; 
+
 
 	srand(time(NULL));
 	for (int i = 0; i < 3 * MAX_NUM_LIMBS; i++) {
@@ -18,6 +18,7 @@ Robot::Robot()
 		colors[i + 2] = getRandFloat(0.0f, 1.0f);
 
 	}
+	prevColor = new float[3] {colors[0], colors[1], colors[2]};
 
 
 	vertices = new float[4 * MAX_NUM_LIMBS] {
