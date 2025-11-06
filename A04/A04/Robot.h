@@ -15,18 +15,16 @@ class Robot
 		float* rotations; 
 		float* translations; 
 		float* colors; 
-		float* vertices; 
 		float* prevColor;
+		float* centerPoint;
 
     public:
 		Robot(); 
 		~Robot(); 
-		void drawFoot();
-		void drawTorso(); 
-		void drawHead(); 
 		void draw(); 
 		void rotate(float rotateAngle);
 		void keyboard(unsigned char key, int x, int y);
 		float getRandFloat(float min, float max);
+		float* getCenterPoint(float x1, float y1, float x2, float y2);
 };
 
