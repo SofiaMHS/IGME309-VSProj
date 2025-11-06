@@ -51,7 +51,9 @@ void Robot::draw()
 	
 
 	//translate the local origin to pivot point for the 1st left leg
+	//centerPoint = getCenterPoint(-0.5f, -2.0f, 0.0f,-2.0f);
 	glTranslatef(-0.5f, -2.0f, 0.0f);
+	//glTranslatef(centerPoint[0], centerPoint[1], 0.0f);
 	//Left Leg - 1
 	glColor3f(colors[7 * 3 + 0], colors[7 * 3 + 1], colors[7 * 3 + 2]);
 	//push the 1st left leg's matrix to control the rotation of 
@@ -60,6 +62,7 @@ void Robot::draw()
 	//rotate and draw the 1st left leg 
 	glRotatef(rotations[7], 0.0, 0.0f, 1.0f);
 	glRectf(0.0f, 0.0f, 1.0f, -1.5f);
+	//-0.5f, 0.0f, 0.5f, -1.5f
 	//calculate the center point of the bottom of the leg
 	centerPoint = getCenterPoint(0.0f, -1.5f, 1.0f, -1.5f);
 	//translates the origin to the pivot point for 2nd left leg
