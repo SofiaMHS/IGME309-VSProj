@@ -211,7 +211,8 @@ void display()
     // 2. apply necessary changes on t.
 
     if (useEasing) {
-        t = cubicBezierEasing(t, 0.42f, 0.0f, 0.58f, 1.0f);
+       //t = cubicBezierEasing(t, 0.42f, 0.0f, 0.58f, 1.0f);
+       t = cubicBezierEasing(t, 0, 1.1, 0.8, 4);
     }
 
     // ****************************************************************
