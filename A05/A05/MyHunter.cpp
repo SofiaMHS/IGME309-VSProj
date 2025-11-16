@@ -15,17 +15,17 @@ MyHunter::MyHunter(vec2 _position, int _ID)
 	// upgrade your player by calling the upgrade(armor, speed, shotgun, bullet) function
 	// You have a total of 20 points for upgrading, 
 	// and each attribute (armor, speed, shotgun, and bullet) can’t exceed 10 points. 
-	unsigned int armorPoint = 0;
-	unsigned int speedPoint = 0;
-	unsigned int shotgunPoint = 0;
-	unsigned int bulletPoint = 0;
+	unsigned int armorPoint = 3;//3 - 3
+	unsigned int speedPoint = 5;//8 - 5
+	unsigned int shotgunPoint = 6;//14 - 6
+	unsigned int bulletPoint = 6;//20 - 6
 	upgrade(armorPoint, speedPoint, shotgunPoint, bulletPoint);
 
 	// customize the color of your player
-	bodyColor = vec3(1.0f, 0.0f, 0.0f);
-	headColor = vec3(0.7f, 0.1f, 0.1f);
-	shotgunColor = vec3(0.0f, 0.0f, 0.0f);
-	bulletColor = vec3(0.0f, 0.0f, 0.0f);
+	bodyColor = vec3(0.6f, 0.3f, 0.6f);
+	headColor = vec3(0.7f, 0.1f, 0.6f);
+	shotgunColor = vec3(0.1f, 0.0f, 0.1f);
+	bulletColor = vec3(0.4f, 0.0f, 0.4f);
 	// write your code above
 	/******************************/
 
@@ -51,7 +51,8 @@ void MyHunter::update(float _deltaTime, const vector<Monster*> _monsters, const 
 
 		// Provided Example:
 		// The following example code demonstrates how to locate the nearest monster:
-		float maxClose = this->radius * 10; 
+		float maxDist = this->radius * 10; 
+		float minDist = this->radius * 9; 
 
 		float minDis = 1000.0f;
 		Monster* nearestMonster = nullptr;
@@ -71,12 +72,19 @@ void MyHunter::update(float _deltaTime, const vector<Monster*> _monsters, const 
 			rotation = atan(directionVec.y, directionVec.x) * (float)(180/3.14);
 
 			//WIP
+			float monsDist = glm::distance(nearestMonster->position, this->position); 
+
 			//can move backwards, not so much forwards, left, right
-			if (glm::distance(nearestMonster->position, this->position) > maxClose) {
-				position += speed * _deltaTime;
+			if (monsDist > maxDist) {
+				directionVec += speed * _deltaTime;
+				position += glm::normalize(directionVec);
+				//position += directionVec;
+
 			}
-			else {
-				position -= speed * _deltaTime;
+			else if(monsDist < minDist) {
+				directionVec += speed * _deltaTime;
+				position -= glm::normalize(directionVec);
+
 			}
 
 		}
