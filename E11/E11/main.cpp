@@ -63,17 +63,22 @@ Point3D getLoopPoint(float t)
 }
 
 // ****************************************************************
-// Write your code here.
-// Add functions for the cubic Bezier function.
 
+//cubic bezier function
 float cubicBezier(float t, float p0, float p1, float p2, float p3) {
+
+    //set u to 1 minus input t
     float u = 1.0f - t;
 
+    //returns solution to formula for cubic bezier
     return  (u * u * u * p0) + (3 * u * u * t * p1) + (3 * u * t * t * p2) + (t * t * t * p3);
 
 }
 
+//function to solve for x using cubic bezier
+//code for function from bezier transform reference
 float solveCubicBezier(float x, float x1, float x2) {
+
 
     float t = x;
     for (int i = 0; i < 8; i++)
@@ -94,6 +99,8 @@ float solveCubicBezier(float x, float x1, float x2) {
     return t;
 }
 
+//function to complete cubic bezier easing using input points
+//code for function from bezier transform reference
 float cubicBezierEasing(float x, float x1, float y1, float x2, float y2) {
     if (x <= 0.0f)
         return 0.0f;
@@ -205,14 +212,13 @@ void display()
     float t = fmod(animTime, 1.0f);
 
     // ****************************************************************
-    // Write your code here.
-    // Hints:
-    // 1. useEasing -> a flag for current easing state.
-    // 2. apply necessary changes on t.
 
+    //set t to cubicBezierEasing return value if useEasing is true
     if (useEasing) {
-       //t = cubicBezierEasing(t, 0.42f, 0.0f, 0.58f, 1.0f);
-       t = cubicBezierEasing(t, 0, 1.1, 0.8, 4);
+
+        //t set to cubicBezier result of itself as x, (0,1.1) as first control
+        //point, and (0.8, 4) as the second control point
+       t = cubicBezierEasing(t, 0.0, 1.1, 0.8, 4.0);
     }
 
     // ****************************************************************
