@@ -73,7 +73,6 @@ void MyHunter::update(float _deltaTime, const vector<Monster*> _monsters, const 
 
 			//WIP
 			float monsDist = glm::distance(nearestMonster->position, this->position); 
-
 			//can move backwards, not so much forwards, left, right
 			if (monsDist > maxDist) {
 				directionVec += speed * _deltaTime;
@@ -82,8 +81,10 @@ void MyHunter::update(float _deltaTime, const vector<Monster*> _monsters, const 
 
 			}
 			else if(monsDist < minDist) {
-				directionVec += speed * _deltaTime;
-				position -= glm::normalize(directionVec);
+				//this value is too small
+				//directionVec += speed * _deltaTime;
+				//position -= glm::normalize(directionVec);
+				position -= speed * _deltaTime * directionVec; 
 
 			}
 
