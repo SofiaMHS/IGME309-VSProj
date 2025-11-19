@@ -10,7 +10,7 @@ MyHunter::MyHunter(vec2 _position, int _ID)
 	// customize your player
 
 	// customize the name of your player
-	playerName = "hunter" + to_string(ID);
+	playerName = "lavender" + to_string(ID);
 
 	// upgrade your player by calling the upgrade(armor, speed, shotgun, bullet) function
 	// You have a total of 20 points for upgrading, 
@@ -44,19 +44,15 @@ void MyHunter::update(float _deltaTime, const vector<Monster*> _monsters, const 
 			reloadTimer = reloadDuration * (1.0f + rand() % 10 / 20.0f);
 		}
 
-		/*********************************************/
-		// Write your implementation below:
-		// 1. Update the hunter's position: Utilize the 'speed' variable and 'deltaTime' to calculate the new position.
-		// 2. Update the hunter's rotation: Adjust the rotation based on the current game logic or input.
-
-		// Provided Example:
-		// The following example code demonstrates how to locate the nearest monster:
+		//the max distance the hunter can be away from the monster
 		float maxDist = this->radius * 10; 
+		//the min distance the hunter can be from the monster
 		float minDist = this->radius * 9; 
 
 		float minDis = 1000.0f;
 		Monster* nearestMonster = nullptr;
 
+		//for loop to locate the nearest monster
 		for (int i = 0; i < _monsters.size(); i++) {
 			if (_monsters[i]->isActived == false)
 				continue;
@@ -68,32 +64,34 @@ void MyHunter::update(float _deltaTime, const vector<Monster*> _monsters, const 
 		}
 		//if nearestMonster is not null
 		if (nearestMonster != nullptr) {
+			//normalized vector which represents the direction of the difference between the
+			//nearest monster's position and the hunter's position
 			vec2 directionVec = glm::normalize(nearestMonster->position - this->position);
-			rotation = atan(directionVec.y, directionVec.x) * (float)(180/3.14);
 
-			//WIP
+			//rotates in the direction of the nearest monster, radians converted to degrees
+			rotation = glm::degrees(glm::atan(directionVec.y, directionVec.x));
+
+
+			//the distance between the nearest monster and the hunter
 			float monsDist = glm::distance(nearestMonster->position, this->position); 
-			//can move backwards, not so much forwards, left, right
+			
+			//if the hunter is too far away from the monster
 			if (monsDist > maxDist) {
-				directionVec += speed * _deltaTime;
-				position += glm::normalize(directionVec);
-				//position += directionVec;
+
+				//move forward in the direction of the monster based on speed times deltaTime
+				position += directionVec * speed * _deltaTime;
 
 			}
+			//if the hunter is too close to the monster
 			else if(monsDist < minDist) {
-				//this value is too small
-				//directionVec += speed * _deltaTime;
-				//position -= glm::normalize(directionVec);
-				position -= speed * _deltaTime * directionVec; 
+
+				//move backwards in the opposite direction of the monster based on speed times deltaTime
+				position -= directionVec* speed * _deltaTime ;
 
 			}
 
 		}
-	
 
-
-		// Write your implementation above
-		/************************************************************/
 
 		// ensure the hunter stay in the battleground
 		if (this->position.x < -300.0f + radius)
@@ -109,17 +107,21 @@ void MyHunter::update(float _deltaTime, const vector<Monster*> _monsters, const 
 
 bool MyHunter::circleCollision(vec2 c1, vec2 c2, float r1, float r2)
 {
-	/***************************************/
+
 	// return whether or not two circles are intersected
+
+	//gets distance between the center points of the circle
 	float dist = glm::distance(c1, c2); 
 
+	//if the distance between the circles is less then either of the radii
+	//of the circles, return true
 	if (dist < r1 || dist < r2) {
 		return true;
 	}
+	//returns false if there is no collision
 	else {
 		return false;
 	}
-	/***************************************/
 }
 
 void MyHunter::collisionDetection(vector<Monster*> _monsters)
