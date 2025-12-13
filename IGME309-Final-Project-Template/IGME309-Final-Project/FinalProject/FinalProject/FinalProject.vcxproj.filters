@@ -26,6 +26,33 @@
     <ClInclude Include="audio_analyzer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cone.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cube.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="duck.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="object.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sphere.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="teapot.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="torus.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pumpkin.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="candyCorn.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="jingle_bells.wav">
