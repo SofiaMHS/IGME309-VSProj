@@ -28,6 +28,9 @@ float cameraAngle = 0.0f;
 float cameraDistance = 20.0f;
 float cameraHeight = 5.0f;
 
+float prevMag = 0.0f;
+float currentMag = 0.0f; 
+
 void init(){
 
 
@@ -226,42 +229,6 @@ void onAudioFeaturesUpdated(const AudioFeatures& features)
     float posY;
     float posZ;
     // TODO: Add your own audio-reactive logic here
-
-    // Example: Print when loud sound detected
-    if (features.magnitude > 0.5f)
-    {
-        // std::cout << "Loud sound detected! Magnitude: " << features.magnitude << std::endl;
-        for (size_t i = 0; i < objects.size(); i++)
-        {
-            objects[i]->rotate(0.5f, 1.0f, 0.3f);
-        }
-    }
-
-    if (features.pitch > 0.5f) {
-        for (size_t i = 0; i < objects.size(); i++)
-        {
-            objects[i]->getPosition(posX, posY, posZ); 
-            if (posY < 8.0f) {
-                objects[i]->translate(0.0f, 0.2f, 0.0f);
-            }
-            else if (posY > -8.0f) {
-                objects[i]->translate(0.0f, -20.0f, 0.0f);
-            }
-        }
-    }
-
-    if (features.pitch < 0.5f) {
-        for (size_t i = 0; i < objects.size(); i++)
-        {
-            objects[i]->getPosition(posX, posY, posZ);
-            if(posY > -8.0f) {
-                objects[i]->translate(0.0f, -0.2f, 0.0f);
-            }
-            else if (posY < 8.0f) {
-                objects[i]->translate(0.0f, 0.2f, 0.0f);
-            }
-        }
-    }
 }
 
 /**
@@ -272,7 +239,34 @@ void onMagnitudeChange(float magnitude)
     // TODO: Implement volume-reactive visualizations
         // Rotate the camera around the scene
     // Rotate each object around its own axis
+
+    float scaleX = 0.0f;
+    float scaleY = 0.0f;
+    float scaleZ = 0.0f;
+
+    float sizeIncrement = 0.0f; 
+
+
+    currentMag = magnitude; 
+
+    if (currentMag > prevMag) {
+        sizeIncrement += 0.5f; 
+    }
+
+    if (currentMag < prevMag) {
+        sizeIncrement -= 0.5f;
+
+    }
+
+    for (size_t i = 0; i < objects.size(); i++)
+    {
+        objects[i]->getScale(scaleX, scaleY, scaleZ); 
+        scaleX = scaleY = scaleZ *= sizeIncrement; 
+        objects[i]->setUniformScale(scaleX); 
     
+    }
+
+    prevMag = currentMag; 
 
 }
 
