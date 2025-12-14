@@ -22,16 +22,13 @@ protected:
     // Color (RGBA)
     float r, g, b, a;
 
-    float* colors; 
-
-    int colors_length;
 
 public:
     // Constructor
     Object() : x(0.0f), y(0.0f), z(0.0f),
                rotX(0.0f), rotY(0.0f), rotZ(0.0f),
                scaleX(1.0f), scaleY(1.0f), scaleZ(1.0f),
-        r(1.0f), g(1.0f), b(1.0f), a(1.0f), colors(new float{ 0.0f }), colors_length(0) {
+        r(1.0f), g(1.0f), b(1.0f), a(1.0f) {
     }
 
     virtual ~Object() {}
@@ -85,10 +82,6 @@ public:
         a = alpha;
     }
 
-    void setColorList(float* colors) {
-        this->colors = colors; 
-    }
-
     // Getters
     void getPosition(float &px, float &py, float &pz) const
     {
@@ -109,14 +102,6 @@ public:
         sx = scaleX;
         sy = scaleY;
         sz = scaleZ;
-    }
-
-    void getColors(float* colors) {
-        colors = this->colors;
-    }
-
-    void getColorsLength(int length) {
-        length = this->colors_length;
     }
 
     // Apply transformations (to be called before drawing)

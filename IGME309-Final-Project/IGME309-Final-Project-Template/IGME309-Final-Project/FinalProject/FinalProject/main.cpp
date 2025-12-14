@@ -26,7 +26,7 @@ std::vector<Object*> objects;
 // Camera parameters
 float cameraAngle = 0.0f;
 float cameraDistance = 20.0f;
-float cameraHeight = 5.0f;
+float cameraHeight = 10.0f;
 
 float prevMag = 0.0f;
 float currentMag = 0.0f;
@@ -39,12 +39,10 @@ float rotateX = 0.5f;
 float rotateY = 1.0f;
 float rotateZ = 0.3f;
 
-
-
 void init(){
 
 
-    // Set background color to dark gray
+    // Set background color to dark purple
     glClearColor(0.1f, 0.0f, 0.1f, 1.0f);
 
     // Enable depth testing
@@ -58,7 +56,7 @@ void init(){
     GLfloat lightPos[] = {5.0f, 5.0f, 5.0f, 1.0f};
     GLfloat lightAmbient[] = { 0.3f, 0.3f, 0.3f, 1.0f };  // Lower ambient for more contrast
     GLfloat lightDiffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };  // Higher diffuse for clear shading
-    GLfloat lightSpecular[] = { 0.5f, 0.5f, 0.5f, 1.0f }; // Some specular for highlights
+    GLfloat lightSpecular[] = { 0.2f, 0.2f, 0.2f, 1.0f }; // Some specular for highlights
 
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
     glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
@@ -84,6 +82,8 @@ void init(){
 
 
     #pragma region Cones
+
+    //Creation of cone background objects
     Cone* cone1 = new Cone(0.5f, 1.0f, 10, 10);
     cone1->setPosition(startX + spacing * 0.5, topY * 2.4f, 0.0f);
     cone1->setColor(0.0f, 1.0f, 1.0f); // Cyan
@@ -146,6 +146,8 @@ void init(){
     #pragma endregion
 
     #pragma region Cubes
+
+    //Creation of cube background objects
     Cube* cube1 = new Cube(0.5f);
     cube1->setPosition(startX + spacing * 0.5, topY * -2.0f, 0.0f);
     cube1->setColor(0.0f, 1.0f, 1.0f); // Cyan
@@ -209,22 +211,16 @@ void init(){
 
     #pragma endregion
    
+    //Creation of candy corn objects 
     CandyCorn* candyCorn1 = new CandyCorn(1.5f);
     candyCorn1->setPosition(startX + spacing * 5, topY, 0.0f);
-    //candyCorn1->setColor(1.0f, 0.3f, 1.0f); // Magenta
     objects.push_back(candyCorn1);
-
 
     CandyCorn* candyCorn2 = new CandyCorn(1.5f);
     candyCorn2->setPosition(startX + spacing * 2, topY, 0.0f);
-    //candyCorn2->setColor(1.0f, 0.3f, 1.0f); // Magenta
     objects.push_back(candyCorn2);
 
-    // Duck (complex shape) - positioned in center
-   /* Duck* duck = new Duck(1.5f);
-    duck->setPosition(0.0f, -2.0f, 0.0f);
-    duck->setColor(1.0f, 0.9f, 0.3f); // Yellow
-    objects.push_back(duck);*/
+    //Creation of pumpkin object
     Pumpkin* pumpkin = new Pumpkin(1.5f);
     pumpkin->setPosition(startX + spacing * 3.5, topY, 0.0f);
     objects.push_back(pumpkin);
@@ -235,103 +231,80 @@ void onAudioFeaturesUpdated(const AudioFeatures& features)
 {
     g_currentFeatures = features;
     
+    //creation position and increment local variables
     float posX;
     float posY;
     float posZ;
     float yIncrement;
 
-    int count = 0;
-    // TODO: Add your own audio-reactive logic here
-
+    //loop through the waveform array
     for (int i = 0; i < features.waveform.size(); i++) 
     {
+            //nested loop of objects array
             for (size_t i = 0; i < objects.size(); i++) {
 
-                //objects[i]->getPosition(posX, posY, posZ);
+                //set y increment to the current waveform value multipled by 10
                 yIncrement = features.waveform[i] * 10.0f;
 
+                //get the position of the current object
                 objects[i]->getPosition(posX, posY, posZ);
 
-
+                //if the y increment is greater than 0
                 if (yIncrement > 0.0f) {
-                    yIncrement = 0.1f;
+                    //set y increment to positive
+                    yIncrement = 0.2f;
                 }
+                //if the y increment is less than 0
                 else if (yIncrement < 0.0f) {
-                    yIncrement = -0.1f;
-                }
-                else {
-                    yIncrement = 0.0f;
+                    //set y increment to negative
+                    yIncrement = -0.2f;
                 }
 
+                //add y increment divided by 1000 to y position
                 posY += yIncrement / 1000.0f;
 
+                //check if the y value is within the boundaries of the world
                 if (posY > -5.0f && posY < 5.0f) {
+                    //set the new position of the object
                     objects[i]->setPosition(posX, posY, posZ);
                 }
             }
     }
 
-    float avgFrequency = 0.0f; 
+    //local variable for average energy 
+    float avgEnergy = 0.0f; 
 
+    //loop through spectrum bins to get the average energy 
     for (int i = 0; i < features.spectrum.size(); i++) {
 
-        avgFrequency += features.spectrum[i];
+        //add the current frequency to the average
+        avgEnergy += features.spectrum[i];
 
     }
-    avgFrequency /= features.spectrum.size();
+    //divide the average by the size of the vector
+    avgEnergy /= features.spectrum.size();
 
-    if (avgFrequency > 0.5f && rotateX < 3.0f && rotateY < 3.0f && rotateZ < 3.0f)
+    //if the average energy is greater than 0.5, and has not reached the threshold 
+    if (avgEnergy > 0.3f && rotateX < 3.0f && rotateY < 3.0f && rotateZ < 3.0f )
     {
-        
+        //increment the rotational values positively 
         rotateX += 0.2f;
         rotateY += 0.1f;
         rotateZ += 0.3f;
+        
+
 
     }
-    if (avgFrequency < 0.5f && rotateX > -3.0f && rotateY > -3.0f && rotateZ > -3.0f)
+    //if the average energy is less than 0.5, and has not reached the threshold 
+    if (avgEnergy < 0.3f && rotateX > -3.0f && rotateY > -3.0f && rotateZ > -3.0f )
     {
-
+        //increment the rotational values positively
         rotateX -= 0.2f;
         rotateY -= 0.1f;
         rotateZ -= 0.3f;
 
     }
 
-    // Example: Print when loud sound detected
-    /*if (features.magnitude > 0.5f)
-    {
-        // std::cout << "Loud sound detected! Magnitude: " << features.magnitude << std::endl;
-        for (size_t i = 0; i < objects.size(); i++)
-        {
-            objects[i]->rotate(0.5f, 1.0f, 0.3f);
-        }
-    }
-
-    if (features.pitch > 0.5f) {
-        for (size_t i = 0; i < objects.size(); i++)
-        {
-            objects[i]->getPosition(posX, posY, posZ); 
-            if (posY < 8.0f) {
-                objects[i]->translate(0.0f, 0.2f, 0.0f);
-            }
-            else if (posY > -8.0f) {
-                objects[i]->translate(0.0f, -20.0f, 0.0f);
-            }
-        }
-    }
-
-    if (features.pitch < 0.5f) {
-        for (size_t i = 0; i < objects.size(); i++)
-        {
-            objects[i]->getPosition(posX, posY, posZ);
-            if(posY > -8.0f) {
-                objects[i]->translate(0.0f, -0.2f, 0.0f);
-            }
-            else if (posY < 8.0f) {
-                objects[i]->translate(0.0f, 0.2f, 0.0f);
-            }
-        }
-    }*/
 }
 
 /**
@@ -339,13 +312,12 @@ void onAudioFeaturesUpdated(const AudioFeatures& features)
  */
 void onMagnitudeChange(float magnitude)
 {
-    // TODO: Implement volume-reactive visualizations
-        // Rotate the camera around the scene
-    // Rotate each object around its own axis
+    //local values to store the scale
     float scaleX = 0.0f;
     float scaleY = 0.0f;
     float scaleZ = 0.0f;
 
+    //local value to store the size increment
     float sizeIncrement = 0.0f;
 
     //get the current magnitude
@@ -374,32 +346,22 @@ void onMagnitudeChange(float magnitude)
         //add the size increment to each scale
         scaleX = scaleY = scaleZ += sizeIncrement;
 
-        //
+        //if the scale has not reached either the 
+        //positive or negative threshold
         if (scaleX > -1.0f && scaleX < 1.0f) {
+            //the new scale is set uniformly to each object
             objects[i]->setUniformScale(scaleX);
         }
 
     }
 
+    //store the current magnitude in the previous magnitude
+    //variable for testing later
     prevMag = currentMag;
 
 }
 
-/**
- * Called when pitch is detected
- */
-void onPitchDetected(float pitch)
-{
-    // TODO: Map pitch to visual properties
-}
 
-/**
- * Called when spectral centroid changes (brightness of sound)
- */
-void onSpectralCentroidChange(float centroid)
-{
-
-}
 
 // ============================================================================
 // OPENGL VISUALIZATION FUNCTIONS
@@ -412,9 +374,8 @@ void display()
     glLoadIdentity();
 
     // ***********************************************************************
-    // ---- EXAMPLE VISUALIZATION (Replace with your own!) ----
 
-  // Position camera in a circular path
+    // Position camera in a circular path
     float camX = cameraDistance * sin(cameraAngle * 3.14159f / 180.0f);
     float camZ = cameraDistance * cos(cameraAngle * 3.14159f / 180.0f);
 
@@ -452,16 +413,6 @@ void idle()
         onMagnitudeChange(g_currentFeatures.magnitude);
         lastMagnitude = g_currentFeatures.magnitude;
     }
-
-    if (g_currentFeatures.pitch > 50.0f)
-    { // Valid pitch range
-        onPitchDetected(g_currentFeatures.pitch);
-    }
-
-    if (g_currentFeatures.spectralCentroid > 0.0f)
-    {
-        onSpectralCentroidChange(g_currentFeatures.spectralCentroid);
-    }
     #pragma endregion
 
     glutPostRedisplay();
@@ -472,6 +423,7 @@ void update(int value)
 {
     // Rotate the camera around the scene
     cameraAngle += 0.3f;
+
     if (cameraAngle > 360.0f)
     {
         cameraAngle -= 360.0f;
@@ -480,6 +432,7 @@ void update(int value)
     // Rotate each object around its own axis
     for (size_t i = 0; i < objects.size(); i++)
     {
+        //rotate using values altered by audio visualizer
        objects[i]->rotate(rotateX, rotateY, rotateZ);
     }
 
@@ -562,8 +515,8 @@ int main(int argc, char** argv)
     // Mode 2: file mode.
     // WAV file only.
     
-    //g_analyzer = new AudioAnalyzer("softFuzzyMan.wav");
-    g_analyzer = new AudioAnalyzer("jingle_bells.wav");
+    g_analyzer = new AudioAnalyzer("softFuzzyMan.wav");
+    //g_analyzer = new AudioAnalyzer("jingle_bells.wav");
 
     g_analyzer->setAudioCallback(onAudioFeaturesUpdated);
 

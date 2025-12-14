@@ -32,16 +32,10 @@
     <ClInclude Include="cube.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="duck.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="object.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="sphere.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="teapot.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="torus.h">

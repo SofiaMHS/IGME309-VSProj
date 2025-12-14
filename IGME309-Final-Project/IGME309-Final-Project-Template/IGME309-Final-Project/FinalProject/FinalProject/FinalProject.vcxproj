@@ -190,11 +190,9 @@
     <ClInclude Include="candyCorn.h" />
     <ClInclude Include="cone.h" />
     <ClInclude Include="cube.h" />
-    <ClInclude Include="duck.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="pumpkin.h" />
     <ClInclude Include="sphere.h" />
-    <ClInclude Include="teapot.h" />
     <ClInclude Include="torus.h" />
   </ItemGroup>
   <ItemGroup>

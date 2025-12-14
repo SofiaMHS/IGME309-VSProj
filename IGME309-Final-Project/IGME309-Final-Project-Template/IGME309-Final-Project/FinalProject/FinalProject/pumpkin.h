@@ -35,12 +35,6 @@ public:
 
         //Pumpkin Body
         glPushMatrix();
-        //glColor4f(1.0f, 0.5f, 0.0f, 1.0f);
-        colors[0 + 0] = 1.0f; 
-        colors[0 + 1] = 0.5f;
-        colors[0 + 2] = 0.0f;
-        colors[0 + 3] = 1.0f;
-        colors_length += 1;
         glColor4f(1.0f, 0.5f, 0.0f, 1.0f);
         glTranslatef(0.0f, -0.3f * size, 0.0f);
         glScalef(1.3f, 1.3f, 1.3f); 
@@ -50,11 +44,6 @@ public:
         //Pumpkin Stem
         glPushMatrix();
         glColor4f(0.5f, 0.5f, 0.0f, 1.0f);
-        colors[1 + 0] = 0.5f;
-        colors[1 + 1] = 0.5f;
-        colors[1 + 2] = 0.0f;
-        colors[1 + 3] = 1.0f;
-        colors_length += 1;
         glTranslatef(0.0f, 1.2f * size, 0.0f);
         glutSolidCube(size * 0.5f);
         glPopMatrix();
@@ -62,11 +51,6 @@ public:
         //Pumpkin Eye 1
         glPushMatrix();
         glColor4f(0.1f, 0.0f, 0.0f, 1.0f);
-        colors[2 + 0] = 0.1f;;
-        colors[2 + 1] = 0.0f;
-        colors[2 + 2] = 0.0f;
-        colors[2 + 3] = 1.0f;
-        colors_length += 1;
         glTranslatef(0.45f * size, 0.3f * size, 1.0f*size);
         glRotatef(-90, 1.0f, 0.0f, 0.0f); // Point forward along X-axis
         glScalef(1.0f, 0.6f, 0.6f);      // Flatten it a bit
