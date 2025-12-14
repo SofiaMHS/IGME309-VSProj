@@ -35,25 +35,25 @@ public:
 
         //Pumpkin Body
         glPushMatrix();
-        glColor4f(1.0f, 0.5f, 0.0f, 1.0f);
+        glColor4f(1.0f, 0.5f, 0.0f, 1.0f);//set the color to orange
         glTranslatef(0.0f, -0.3f * size, 0.0f);
-        glScalef(1.3f, 1.3f, 1.3f); 
+        glScalef(1.3f, 1.3f, 1.3f); //scale up the sphere a bit
         glutSolidSphere(size, 30, 30);
         glPopMatrix();
 
         //Pumpkin Stem
         glPushMatrix();
-        glColor4f(0.5f, 0.5f, 0.0f, 1.0f);
+        glColor4f(0.5f, 0.5f, 0.0f, 1.0f);//set the color to light brown
         glTranslatef(0.0f, 1.2f * size, 0.0f);
         glutSolidCube(size * 0.5f);
         glPopMatrix();
 
         //Pumpkin Eye 1
         glPushMatrix();
-        glColor4f(0.1f, 0.0f, 0.0f, 1.0f);
+        glColor4f(0.1f, 0.0f, 0.0f, 1.0f); //set the color to dark brown
         glTranslatef(0.45f * size, 0.3f * size, 1.0f*size);
         glRotatef(-90, 1.0f, 0.0f, 0.0f); // Point forward along X-axis
-        glScalef(1.0f, 0.6f, 0.6f);      // Flatten it a bit
+        glScalef(1.0f, 0.6f, 0.6f);      // Flatten the eye a bit
         glutSolidCone(0.2f * size, 0.5f * size, 10, 10);
         glPopMatrix();
 
@@ -61,15 +61,15 @@ public:
         glPushMatrix();
         glTranslatef(-0.2f * size, 0.3f * size, 1.2f * size);
         glRotatef(-90, 1.0f, 0.0f, 0.0f); // Point forward along X-axis
-        glScalef(1.0f, 0.6f, 0.6f);      // Flatten it a bit
+        glScalef(1.0f, 0.6f, 0.6f);      // Flatten the eye a bit
         glutSolidCone(0.2f * size, 0.5f * size, 10, 10);
         glPopMatrix();
 
         //Pumpkin Mouth 
         glPushMatrix();
-        glTranslatef(0.2f * size, -0.3f * size, 1.1f * size);
+        glTranslatef(0.0f, -0.3f * size, 1.1f * size);
         glRotatef(90, 1.0f, 0.0f, 0.0f); // Point forward along X-axis
-        glScalef(1.5f, 0.6f, 0.6f);      // Flatten it a bit
+        glScalef(1.5f, 0.6f, 0.6f);      // Flatten the mouth a bit
         glutSolidCone(0.6f * size, 0.8f * size, 30, 30);
         glPopMatrix();
     }

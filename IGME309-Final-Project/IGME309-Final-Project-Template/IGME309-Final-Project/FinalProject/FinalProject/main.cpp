@@ -105,7 +105,7 @@ void init(){
     objects.push_back(cone4);
 
     Cone* cone5 = new Cone(0.5f, 1.0f, 10, 10);
-    cone5->setPosition(startX + spacing * 1.5, topY * -2.7f, 4.0f);
+    cone5->setPosition(startX + spacing * 1.5, topY * -2.4f, 4.0f);
     cone5->setColor(1.0f, 0.0f, 1.0f); // Pink
     objects.push_back(cone5);
 
@@ -135,7 +135,7 @@ void init(){
     objects.push_back(cone10);
 
     Cone* cone11 = new Cone(0.5f, 1.0f, 10, 10);
-    cone11->setPosition(startX + spacing * 5.5, topY * -2.7f, 4.0f);
+    cone11->setPosition(startX + spacing * 5.5, topY * -2.4f, 4.0f);
     cone11->setColor(0.0f, 0.9f, 0.0f); // Green
     objects.push_back(cone11);
 
@@ -159,7 +159,7 @@ void init(){
     objects.push_back(cube2);
 
     Cube* cube3 = new Cube(0.5f);
-    cube3->setPosition(startX + spacing * 1.2, topY * -2.8f, -7.0f);
+    cube3->setPosition(startX + spacing * 1.2, topY * -2.0f, -7.0f);
     cube3->setColor(0.0f, 0.9f, 0.0f); // Green
     objects.push_back(cube3);
 
@@ -194,7 +194,7 @@ void init(){
     objects.push_back(cube9);
 
     Cube* cube10 = new Cube(0.5f);
-    cube10->setPosition(startX + spacing * 5.5, topY * 2.8f, 8.0f);
+    cube10->setPosition(startX + spacing * 5.5, topY * 2.0f, 8.0f);
     cube10->setColor(0.0f, 0.9f, 0.0f); // Green
     objects.push_back(cube10);
 
@@ -211,7 +211,7 @@ void init(){
 
     #pragma endregion
    
-    //Creation of candy corn objects 
+    //Creation of candy corn objects to the left and right of the pumpk
     CandyCorn* candyCorn1 = new CandyCorn(1.5f);
     candyCorn1->setPosition(startX + spacing * 5, topY, 0.0f);
     objects.push_back(candyCorn1);
@@ -220,17 +220,57 @@ void init(){
     candyCorn2->setPosition(startX + spacing * 2, topY, 0.0f);
     objects.push_back(candyCorn2);
 
-    //Creation of pumpkin object
+    //Creation of pumpkin object in the center of the screen
     Pumpkin* pumpkin = new Pumpkin(1.5f);
     pumpkin->setPosition(startX + spacing * 3.5, topY, 0.0f);
     objects.push_back(pumpkin);
 
 }
 
+
 void onAudioFeaturesUpdated(const AudioFeatures& features)
 {
     g_currentFeatures = features;
-    
+
+}
+
+//called when audio is registered as active based on pitch
+void onSpectrumChange(std::vector<float> spectrum) {
+    //local variable for average energy 
+    float avgEnergy = 0.0f;
+
+    //loop through spectrum bins to get the average energy 
+    for (int i = 0; i < spectrum.size(); i++) {
+
+        //add the current frequency to the average
+        avgEnergy += spectrum[i];
+
+    }
+    //divide the average by the size of the vector
+    avgEnergy /= spectrum.size();
+
+    //if the average energy is greater than 0.5, and has not reached the threshold 
+    if (avgEnergy > 0.3f && rotateX < 3.0f && rotateY < 3.0f && rotateZ < 3.0f)
+    {
+        //increment the rotational values positively 
+        rotateX += 0.2f;
+        rotateY += 0.1f;
+        rotateZ += 0.3f;
+
+
+    }
+    //if the average energy is less than 0.5, and has not reached the threshold 
+    if (avgEnergy < 0.3f && rotateX > -3.0f && rotateY > -3.0f && rotateZ > -3.0f)
+    {
+        //increment the rotational values positively
+        rotateX -= 0.2f;
+        rotateY -= 0.1f;
+        rotateZ -= 0.3f;
+    }
+}
+
+//called when audio is registered as active based on pitch
+void onWaveformChange(std::vector<float> waveform) {
     //creation position and increment local variables
     float posX;
     float posY;
@@ -238,78 +278,41 @@ void onAudioFeaturesUpdated(const AudioFeatures& features)
     float yIncrement;
 
     //loop through the waveform array
-    for (int i = 0; i < features.waveform.size(); i++) 
+    for (int i = 0; i < waveform.size(); i++)
     {
-            //nested loop of objects array
-            for (size_t i = 0; i < objects.size(); i++) {
+        //nested loop of objects array
+        for (size_t i = 0; i < objects.size(); i++) {
 
-                //set y increment to the current waveform value multipled by 10
-                yIncrement = features.waveform[i] * 10.0f;
+            //set y increment to the current waveform value multipled by 10
+            yIncrement = waveform[i] * 10.0f;
 
-                //get the position of the current object
-                objects[i]->getPosition(posX, posY, posZ);
+            //get the position of the current object
+            objects[i]->getPosition(posX, posY, posZ);
 
-                //if the y increment is greater than 0
-                if (yIncrement > 0.0f) {
-                    //set y increment to positive
-                    yIncrement = 0.2f;
-                }
-                //if the y increment is less than 0
-                else if (yIncrement < 0.0f) {
-                    //set y increment to negative
-                    yIncrement = -0.2f;
-                }
-
-                //add y increment divided by 1000 to y position
-                posY += yIncrement / 1000.0f;
-
-                //check if the y value is within the boundaries of the world
-                if (posY > -5.0f && posY < 5.0f) {
-                    //set the new position of the object
-                    objects[i]->setPosition(posX, posY, posZ);
-                }
+            //if the y increment is greater than 0
+            if (yIncrement > 0.0f) {
+                //set y increment to positive
+                yIncrement = 0.2f;
             }
+            //if the y increment is less than 0
+            else if (yIncrement < 0.0f) {
+                //set y increment to negative
+                yIncrement = -0.2f;
+            }
+
+            //add y increment divided by 1000 to y position
+            posY += yIncrement / 1000.0f;
+
+            //check if the y value is within the boundaries of the world
+            if (posY > -5.0f && posY < 5.0f) {
+                //set the new position of the object
+                objects[i]->setPosition(posX, posY, posZ);
+            }
+        }
     }
-
-    //local variable for average energy 
-    float avgEnergy = 0.0f; 
-
-    //loop through spectrum bins to get the average energy 
-    for (int i = 0; i < features.spectrum.size(); i++) {
-
-        //add the current frequency to the average
-        avgEnergy += features.spectrum[i];
-
-    }
-    //divide the average by the size of the vector
-    avgEnergy /= features.spectrum.size();
-
-    //if the average energy is greater than 0.5, and has not reached the threshold 
-    if (avgEnergy > 0.3f && rotateX < 3.0f && rotateY < 3.0f && rotateZ < 3.0f )
-    {
-        //increment the rotational values positively 
-        rotateX += 0.2f;
-        rotateY += 0.1f;
-        rotateZ += 0.3f;
-        
-
-
-    }
-    //if the average energy is less than 0.5, and has not reached the threshold 
-    if (avgEnergy < 0.3f && rotateX > -3.0f && rotateY > -3.0f && rotateZ > -3.0f )
-    {
-        //increment the rotational values positively
-        rotateX -= 0.2f;
-        rotateY -= 0.1f;
-        rotateZ -= 0.3f;
-
-    }
-
 }
 
-/**
- * Called when magnitude (volume) changes significantly
- */
+//Called when magnitude (volume) changes significantly
 void onMagnitudeChange(float magnitude)
 {
     //local values to store the scale
@@ -400,10 +403,7 @@ void display()
  */
 void idle()
 {
-    // ***********************************************************************
-    // You might want to do animation here.
-    // 
-    // ***********************************************************************
+
 
     #pragma region Audio Feature Processing DO NOT REMOVE
     // Update callbacks based on current features
@@ -411,8 +411,16 @@ void idle()
     if (std::abs(g_currentFeatures.magnitude - lastMagnitude) > 0.05f)
     {
         onMagnitudeChange(g_currentFeatures.magnitude);
+
         lastMagnitude = g_currentFeatures.magnitude;
     }
+    if (g_currentFeatures.pitch > 50.0f) {
+        onWaveformChange(g_currentFeatures.waveform);
+
+        onSpectrumChange(g_currentFeatures.spectrum);
+    }
+   
+
     #pragma endregion
 
     glutPostRedisplay();
@@ -433,24 +441,25 @@ void update(int value)
     for (size_t i = 0; i < objects.size(); i++)
     {
         //rotate using values altered by audio visualizer
-       objects[i]->rotate(rotateX, rotateY, rotateZ);
+
+        //Mode 1: rotate the objects using different values for 
+        //each axis
+        objects[i]->rotate(rotateX, rotateY, rotateZ);
+
+        //Mode 2: rotate the objects using the same values for
+        // each axis
+       //objects[i]->rotate(rotateX, rotateX, rotateX);
+
     }
 
     glutPostRedisplay();
     glutTimerFunc(16, update, 0); // ~60 FPS
 }
 
-/**
- * Handle window resizing
- */
+
+//Handle window resizing
 void reshape(int w, int h)
 {
-    /*
-    glViewport(0, 0, w, h);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluOrtho2D(-1.0, 1.0, -1.0, 1.0);
-    glMatrixMode(GL_MODELVIEW);*/
     glViewport(0, 0, w, h);
 
     glMatrixMode(GL_PROJECTION);
@@ -461,9 +470,8 @@ void reshape(int w, int h)
     glMatrixMode(GL_MODELVIEW);
 }
 
-/**
- * Handle keyboard input
- */
+
+//Handle keyboard input
 void keyboard(unsigned char key, int x, int y)
 {
     switch (key)
@@ -477,15 +485,6 @@ void keyboard(unsigned char key, int x, int y)
             delete g_analyzer;
         }
         exit(0);
-        break;
-
-        // Optional: Add more keyboard controls
-        // Example: Different visualization modes, color schemes, etc.
-    case '1':
-        std::cout << "Mode 1 selected" << std::endl;
-        break;
-    case '2':
-        std::cout << "Mode 2 selected" << std::endl;
         break;
     }
 }
@@ -508,15 +507,10 @@ int main(int argc, char** argv)
     glEnable(GL_LINE_SMOOTH);
     glLineWidth(2.0f);
 
-    // Initialize audio analyzer
-    // Mode 1: microphone mode (recommended)
-    //g_analyzer = new AudioAnalyzer(44100, 1024);
-    //
     // Mode 2: file mode.
     // WAV file only.
-    
+    //audio file used in calculation 
     g_analyzer = new AudioAnalyzer("softFuzzyMan.wav");
-    //g_analyzer = new AudioAnalyzer("jingle_bells.wav");
 
     g_analyzer->setAudioCallback(onAudioFeaturesUpdated);
 
@@ -527,6 +521,7 @@ int main(int argc, char** argv)
         return 1;
     }
 
+    //initialize models and lighting effects
     init();
 
     // Register GLUT callbacks

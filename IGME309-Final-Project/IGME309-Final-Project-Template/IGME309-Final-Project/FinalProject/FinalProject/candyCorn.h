@@ -33,31 +33,31 @@ public:
     void draw() override
     {
 
-        //Base of Candy Corn
+        //Bottom of Candy Corn
         glPushMatrix();
-        glColor4f(1.0f, 0.8f, 0.0f, 1.0f);
+        glColor4f(1.0f, 0.8f, 0.0f, 1.0f);//set the color to yellow
         glTranslatef(0.0f, -0.3f * size, 0.0f);
         glRotatef(-90, 1.0f, 0.0f, 0.0f); // Point forward along X-axis
-        glScalef(0.8f, 0.8f, 1.3f);
-        glutSolidCone(1.4f * size, 1.5f * size, 30, 30);
+        glScalef(0.8f, 0.8f, 1.3f);//scale the cone up
+        glutSolidCone(1.4f * size, 1.5f * size, 30, 30);//set the base to be larger than the middle and top
         glPopMatrix();
 
         //Middle of Candy Corn
         glPushMatrix();
-        glColor4f(1.0f, 0.2f, 0.0f, 1.0f);
+        glColor4f(1.0f, 0.2f, 0.0f, 1.0f);//set the color to orange
         glTranslatef(0.0f, 0.3f * size, 0.0f);
         glRotatef(-90, 1.0f, 0.0f, 0.0f); // Point forward along X-axis
-        glScalef(1.0f, 1.0f, 1.3f);
-        glutSolidCone(0.8f * size, 1.0f * size, 30, 30);
+        glScalef(1.0f, 1.0f, 1.3f);//scale the cone up 
+        glutSolidCone(0.8f * size, 1.0f * size, 30, 30);//set the base to be the same as the top
         glPopMatrix();
 
         //Top of Candy Corn
         glPushMatrix();
-        glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+        glColor4f(1.0f, 1.0f, 1.0f, 1.0f);//set the color to white
         glTranslatef(0.0f, 0.5f * size, 0.0f);
         glRotatef(-90, 1.0f, 0.0f, 0.0f); // Point forward along X-axis
-        glScalef(0.8f, 0.8f, 1.3f);
-        glutSolidCone(0.8f * size, 1.0f * size, 30, 30);
+        glScalef(0.8f, 0.8f, 1.3f);//scale the cone up 
+        glutSolidCone(0.8f * size, 1.0f * size, 30, 30);//set the base to be the same as the middle
         glPopMatrix();
 
     }
